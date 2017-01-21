@@ -20,20 +20,49 @@ if sys.getdefaultencoding() != default_encoding:
 render = web.template.render('templates', base='base')
 
 urls = (
-        '/blog', 'Blog',
         '/index', 'Index',
         '/save', 'Save',
+        '/login', 'Login',
+        '/about', 'About',
+        '/contact', 'Contact',
+        '/blog', 'Blog',
+        '/tools', 'Tools',
+        '/video', 'Video',
         '/', 'Hello',)
+
+class Login(object):
+    def GET(self):
+        return u"请登录"
+
+
+class About(object):
+    def GET(self):
+        return u"关于"
+
+
+class Contact(object):
+    def GET(self):
+        return u"联系我们"
+
+
+class Blog(object):
+    def GET(self):
+        return u"博客"
+
+
+class Tools(object):
+    def GET(self):
+        return u"工具"
+
+
+class Video(object):
+    def GET(self):
+        return u"视频"
 
 
 class Hello(object):
     def GET(self):
-        return "Hello World!"
-
-        
-class Blog(object):
-    def GET(self):
-        return render.blog(u'念师')
+        return render.homepage()
 
 
 class Index(object):
