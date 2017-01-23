@@ -42,8 +42,6 @@ web.config._session = session
 
 render = web.template.render('templates', base='base')
 
-
-
 class Login(object):
     def check_pwd(self, username, password):
         result = model.check_pwd(username, password)
@@ -95,7 +93,7 @@ class Contact(object):
 
 class Blog(object):
     def GET(self):
-        return u"博客"
+        return render.blog()
 
 
 class Tools(object):
