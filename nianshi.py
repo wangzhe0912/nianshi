@@ -12,13 +12,13 @@ import os
 import model
 
 os.environ['NLS_LANG'] = 'SIMPLIFIED CHINESE_CHINA.UTF8'
-
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
 
-render = web.template.render('templates', base='base')
+web.config.debug = False
+
 
 urls = (
         '/index', 'Index',
@@ -33,6 +33,17 @@ urls = (
         '/log_out', 'LogOut',
         '/', 'Hello',)
 
+app = web.application(urls, globals())
+
+#初始化了一个session
+session = web.session.Session(app, web.session.DiskStore('sessions'), initializer = {'login_status': 0, 'username':'','privilege': 0})
+web.config._session = session
+
+
+render = web.template.render('templates', base='base')
+
+
+
 class Login(object):
     def check_pwd(self, username, password):
         result = model.check_pwd(username, password)
@@ -40,7 +51,10 @@ class Login(object):
         
 
     def GET(self):
-        return render.login()
+        if session.login_status:
+            return render.homepage(True,session.username)
+        else:
+            return render.login()
 
     def POST(self):
         data = web.input()
@@ -48,29 +62,26 @@ class Login(object):
         password = data['form-password']
         result = self.check_pwd(username, password)
         if not result["status"]:
-            return render.homepage(False, result["desc"])
+            return render.login(result=False, desc=result["desc"])
         else:
-            web.setcookie('name', result['result']['username'], 3600)
-            web.setcookie('admin', result['result']['admin'], 3600)
-            web.setcookie('shizi', result['result']['shizi'], 3600)
+            session.username = result['result']['username']
+            session.login_status = 1
+            if not result['result']['admin'] and result['result']['shizi']:
+                session.privilege = 1
+            elif result['result']['admin'] and not result['result']['shizi']:
+                session.privilege = 2   
+            else:
+                session.privilege = 0
             return render.homepage(True, result['result']['username'])
         
 
-class Logout(object):
-    def GET(self):
-        web.cookies().clear()
-        print web.cookies()
-        #web.redirect('/')
-        return 1+1
-
-
 class LogOut(object):
     def GET(self):
-        web.cookies()
-        print web.cookies()
-        #web.redirect('/')
-        return 1+1
-        
+        session.username =''
+        session.login_status = 0
+        session.privilege = 0
+        return render.login()
+     
 
 class About(object):
     def GET(self):
@@ -99,8 +110,8 @@ class Video(object):
 
 class Hello(object):
     def GET(self):
-        if 'name' in web.cookies():
-            return render.homepage(True, web.cookies().name)
+        if session.login_status==1:
+            return render.homepage(True, session.username)
         else:
             return render.homepage(False, '')
 
@@ -124,6 +135,5 @@ class Save(object):
 
         
 if __name__ == '__main__':
-    app = web.application(urls, globals())
     app.run()
 
