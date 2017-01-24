@@ -101,7 +101,7 @@
         //自动保存间隔时间， 单位ms
         //,saveInterval: 500
 
-        //,fullscreen : false //是否开启初始化时即全屏，默认关闭
+        //,fullscreen : true //是否开启初始化时即全屏，默认关闭
 
         //,imagePopup:true      //图片操作的浮层开关，默认打开
 

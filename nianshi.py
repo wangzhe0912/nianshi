@@ -17,7 +17,7 @@ if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
 
-web.config.debug = False
+# web.config.debug = False
 
 
 urls = (
@@ -50,9 +50,12 @@ class Login(object):
         
 
     def GET(self):
-        if session.login_status:
-            return render.homepage(True,session.username)
-        else:
+        try:
+            if session.login_status:
+                return render.homepage(True,session.username)
+            else:
+                return render.login()
+        except:
             return render.login()
 
     def POST(self):
@@ -113,9 +116,12 @@ class Video(object):
 
 class Hello(object):
     def GET(self):
-        if session.login_status==1:
-            return render.homepage(True, session.username)
-        else:
+        try:
+            if session.login_status==1:
+                return render.homepage(True, session.username)
+            else:
+                return render.homepage(False, '')
+        except:
             return render.homepage(False, '')
 
 
