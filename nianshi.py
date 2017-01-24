@@ -31,6 +31,7 @@ urls = (
         '/video', 'Video',
         '/logout', 'Logout',
         '/log_out', 'LogOut',
+        '/editor', 'Editor',
         '/', 'Hello',)
 
 app = web.application(urls, globals())
@@ -80,6 +81,10 @@ class LogOut(object):
         session.privilege = 0
         return render.login()
      
+
+class Editor(object):
+    def GET(self):
+        return render.editor()
 
 class About(object):
     def GET(self):
