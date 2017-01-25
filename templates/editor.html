@@ -6,9 +6,10 @@
 <div id='editor'>
     <h1>完整demo</h1>
     <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
-    <form method="POST" action="/save" name="form">
+    <form method="POST" action="/editor" name="form">
         <input type="hidden" value="" name="input_content" id='input_content'/>
-        <button onclick="post_data()" id="submit" type="button" class="btn btn-primary">提交</button>
+        <button  onclick="post_data()" class="btn btn-primary">提交</button>
+        <!-- <button onclick="post_data()">提交</button> -->
     </form>
 </div>
 

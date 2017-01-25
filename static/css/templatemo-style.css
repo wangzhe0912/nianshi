@@ -112,7 +112,7 @@ footer { padding: 15px; }
 }
 .profile-photo-container { position: relative; }
 .profile-photo-overlay {
-	background-color: rgba(4, 152, 114, 0.35);
+	background-color: rgba(4, 152, 114, 0);
 	position: absolute;
 	top: 0;
 	left: 0;
