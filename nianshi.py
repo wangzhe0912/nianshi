@@ -120,19 +120,19 @@ class Blog(object):
 
 #博客编辑页
 class Editor(object):
-    form = web.form.Form(
-        web.form.Textbox('title', web.form.notnull,
-                         size=30,
-                         description=u'日志标题'),
-        web.form.Textarea('content', web.form.notnull,
-                          rows=30, cols=80,
-                          description=u'日志内容'),
-        web.form.Button(u'提交')
-    )
-
+    
+    blog_class = model.get_blog_class()
+    
+    def url_decode(self, encode_str):
+        result_list = encode_str.split('&')
+        result_dict = {}
+        for key, value in [x.split('=') for x in result_list]:
+            result_dict[key] = unquote(value)
+        return result_dict
+    
     def GET(self):
-        form = self.form()
-        return render.editor(form)
+        blog_class = model.get_blog_class()
+        return render.editor(list(blog_class))
 
 #     def POST(self):
 #         data = web.data().split('=')[-1]
@@ -140,11 +140,10 @@ class Editor(object):
 #         print result
 #         web.seeother('/editor')
     def POST(self):
-        form = self.form()
-        if not form.validates():
-            return render.new(form)
-        model.new_post(form.d.title, form.d.content)
-        raise web.seeother('/')
+        data = web.data()
+        result = self.url_decode(data)
+        model.new_post(result['title'], result['content'], result['blog_class'])
+        raise web.seeother('/blog')
 
 #工具页
 class Tools(object):

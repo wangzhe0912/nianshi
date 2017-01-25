@@ -6,7 +6,7 @@ $def with (result=False, info='')
       <h1>念师</h1>
     </header>
     <div class="profile-photo-container">
-      <img src="../static/img/profile-photo.jpeg" alt="Profile Photo" class="img-responsive">  
+      <img id="profile" src="../static/img/profile-photo.jpeg" alt="Profile Photo" class="img-responsive">  
       <div class="profile-photo-overlay"></div>
     </div>      
     <!-- Search box -->
@@ -44,14 +44,14 @@ $def with (result=False, info='')
                   <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/log_out">退出</a></li>
                 </ul>
               </li>
-            <li class="col-lg-4 col-md-4">
+<!--             <li class="col-lg-4 col-md-4">
               <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">博客分类</button>
                 <ul id="logout" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                   <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/1">Python</a></li>
                   <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/2">DeepLearning</a></li>
                   <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/3">Testing</a></li>
                 </ul>
-            </li>
+            </li> -->
 <!--             <li><a href="">Overview</a></li> -->
           </ul>  
         </nav> 
@@ -129,5 +129,8 @@ $def with (result=False, info='')
 }
 .list-group-item {
   border: none;
+}
+#profile: {
+  background-color: rgba(4, 152, 114, 0); 
 }
 </style>
