@@ -1,10 +1,32 @@
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span>
-<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">a</span><span class="o">*</span><span class="mi">2</span>
-    
+本系列博客主要讲解Python的web.py框架的使用。</p><p>web.py是一款轻量级的web开发框架，特点是简单易学且功能强大。</p><br/><p>基本环境要求：</p><p>1. 安装python</p><p>直接从官网下载即可。</p><p>2. 安装web.py模块</p><p>可通过pip命令直接安装。在命令行状态下输入如下命令：</p><p>pip install web.py</p><br/><p>一个最基本的web.py项目实例</p><p>新建一个demo.py文件，并编辑文件如下</p><br/><br/><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#-*- coding: UTF-8 -*-  </span>
+
+<span class="kn">import</span> <span class="nn">web</span>  
+
+<span class="n">urls</span> <span class="o">=</span> <span class="p">(</span>  
+    <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Index&#39;</span><span class="p">,</span>  
+<span class="p">)</span>  
+  
+<span class="k">class</span> <span class="nc">Index</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>  
+    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="s2">&quot;hello world!&quot;</span>  
+  
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>  
+    <span class="n">app</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">application</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>  
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>  
 </pre></div>
-</td></tr></table>
-<link href="../static/css/highlight.css" rel="stylesheet" type="text/css">
+</td></tr></table><p>其中，urls用于指名url与对应操作的映射关系。</p><p>urls是一个元组，奇数项和偶数项分别表示url与操作类。</p><p>接下来，针对urls中对应的类，分别需要编写类来说明具体的操作。</p><p>针对每个类，可以针对get和post两种不同的请求方法定义不同的操作。</p><p>最后的部分表明运行该程序。</p><br/><p>编辑好deno.py文件后，可以通过命令行执行python demo.py来启动web服务。</p><p>默认的端口号为8080。</p><p>打开浏览器，输入localhost:8080即可看到显示hello world!的网页。
+<link rel="stylesheet" href="../static/css/highlight.css">
