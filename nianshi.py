@@ -9,8 +9,12 @@ import web
 from urlparse import unquote
 import sys
 import os
+import time
 import model
 from webpyueditor import Ue_ImageUp, Ue_FileUp, Ue_ScrawlUp, Ue_GetRemoteImage, Ue_GetMovie, Ue_ImageManager
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_for_filename
 
 os.environ['NLS_LANG'] = 'SIMPLIFIED CHINESE_CHINA.UTF8'
 default_encoding = 'utf-8'
@@ -33,6 +37,7 @@ urls = ('/login', 'Login',
         #editor
         '/view/(\d+)', 'View',
 #         '/new', 'New',
+        '/upload_blog', 'UploadBlog',
         '/delete/(\d+)', 'Delete',
         '/edit/(\d+)', 'Edit',
         '/imgs/(.*)', 'Imgs',
@@ -115,18 +120,29 @@ class LogOut(object):
      
 #博客页
 class Blog(object):
+    
+    def get_blogs_for_four_parts(self):
+        result_programming = list(model.get_blogs_programming())[:6]
+        result_deeplearning = list(model.get_blogs_deeplearing())[:6]
+        result_testing = list(model.get_blogs_testing())[:6]
+        result_perfect = list(model.get_blogs_perfect())[:6]
+        return [result_programming, result_deeplearning, result_testing, result_perfect]
+           
     def GET(self):
-        return render.blog()
+        blogs = self.get_blogs_for_four_parts()
+        return render.blog(blogs=blogs)
 
 #博客编辑页
 class Editor(object):
-    
-    blog_class = model.get_blog_class()
     
     def url_decode(self, encode_str):
         result_list = encode_str.split('&')
         result_dict = {}
         for key, value in [x.split('=') for x in result_list]:
+            if key == "content":
+                print value
+                value = value.replace('+', ' ')
+                print value
             result_dict[key] = unquote(value)
         return result_dict
     
@@ -141,9 +157,81 @@ class Editor(object):
 #         web.seeother('/editor')
     def POST(self):
         data = web.data()
+        print data
+        print "*********"
         result = self.url_decode(data)
+        print result
         model.new_post(result['title'], result['content'], result['blog_class'])
         raise web.seeother('/blog')
+
+
+class UploadBlog(object):
+    
+    def get_html_text(self, plain_text, language_suffix):
+        #formatter = HtmlFormatter(encoding='utf-8', style = 'emacs', linenos = True)
+        formatter = HtmlFormatter(encoding='utf-8', style = 'emacs', linenos = True)
+        lexer = get_lexer_for_filename('a.' + language_suffix.lower())
+        return highlight(plain_text, lexer, formatter)
+    
+    def trans_txt_to_html(self, txt):
+        result = "<p>"
+        space_line = 0
+        script = ""
+        script_tag = 0
+        language_suffix = ''
+        for line in txt:
+            if "***script***" in line:
+                #开始标本语言
+                language_suffix = line.split()[-1]
+                script_tag = 1
+                continue
+            elif "***script_end***" in line:
+                #脚本语言结束
+                script_tag = 0
+                result += self.get_html_text(script, language_suffix)
+                script = ""
+                language_suffix = ""
+                continue
+            elif script_tag == 1:
+                #如果属于脚本内容
+                script += line
+                continue
+            #此后都与脚本无关
+            if not line.strip():
+                #如果是空行
+                if space_line == 0:
+                    #如果上一行不是空行
+                    if result:
+                        result += '</p>'
+                    space_line = 1
+                    continue
+                else:
+                    #如果上一行就是空行
+                    result += '<br/>'
+            else:
+                #如果不是空行
+                if space_line != 0:
+                    result += '<p>'
+                line.replace(" ", "&nbsp")
+                result += line.strip()
+                space_line = 0
+        result += '<link rel="stylesheet" href="../static/css/highlight.css">'
+        return result
+    
+    def GET(self):
+        blog_class = model.get_blog_class()
+        return render.upload_blog(list(blog_class))
+    
+    def POST(self):
+        data = web.input()
+        blog_class = data.blog_class
+        input_file = data.inputfile
+        print input_file
+        blog_content = self.trans_txt_to_html(input_file)
+        title = data.title
+        model.new_post(title, blog_content, blog_class)
+        blog_class = model.get_blog_class()
+        return web.seeother('/blog')
 
 #工具页
 class Tools(object):

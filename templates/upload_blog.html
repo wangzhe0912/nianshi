@@ -1,7 +1,5 @@
 $def with (blog_classes)
-
-
-
+<div class="col-xs-5 col-sm-5 col-md-offset-3">
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
     <div class="navbar-header">
@@ -16,38 +14,21 @@ $def with (blog_classes)
     </div>
 </nav>
 
-
-<form role="form" action="/editor" method="POST" id="blog_post">
-  <div class="form-group">
-  <div class="col-xs-6 col-sm-6">
+<div class="form-group" >
+<form role="form" action="/upload_blog" method="POST" id="blog_post" enctype="multipart/form-data">
     <label for="title">文章名</label>
     <input type="text" class="form-control" name="title" placeholder="请输入标题">
-  </div>
-  <div class="col-xs-4 col-sm-4">
     <label for="blog_class">博客类型</label>
     <select class="form-control" name="blog_class" form="blog_post">
         $for blog_class in blog_classes:
             <option value="$blog_class.id">$blog_class.blog_class_name</option>
     </select>
-  </div>
-  <div class="col-xs-2 col-sm-2">
+    <div class="form-group">
+        <label for="inputfile">文件输入</label>
+        <input type="file" id="inputfile" name="inputfile">
+    </div>
   <button type="submit" class="btn btn-default" form="blog_post">提交</button>
   </div>
-  <br><br>
-  <div class="col-xs-12 col-sm-12">
-    <label class="sr-only" for="content">内容</label>
-    <textarea rows="10" id="content" name="content" cols="200"></textarea>
-  </div>
-  </div>
-  <script type="text/javascript">
-        UE.getEditor('content');
-  </script>
 </form>
-
-<style>
-body {
-    background-color: aliceblue;
-    text-align: center;
-}
-</style>
-
+</div>
+</div>

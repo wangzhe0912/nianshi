@@ -8,12 +8,13 @@ Created on 2017年1月25日
 from language_format import get_html_text
 
 def trans_txt_to_html(txt):
-    result = ""
+    result = "<p>"
     space_line = 0
     script = ""
     script_tag = 0
     language_suffix = ''
     for line in txt:
+        print line
         if "***script***" in line:
             #开始标本语言
             language_suffix = line.split()[-1]
@@ -54,6 +55,9 @@ def trans_txt_to_html(txt):
     
 
 if __name__ == '__main__':
-    txt = open('C:\\Users\\wangzhe12\\Desktop\\test.txt','rb')
+    txt = """asdasd
+1231
+王哲
+"""
     print trans_txt_to_html(txt)
     

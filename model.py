@@ -8,7 +8,7 @@ Created on Sat Jan 21 21:46:48 2017
 import web
 import datetime
 
-db = web.database(dbn='mysql', db='nianshi', user='root', pw='Qxq!102132', charset="utf8")
+db = web.database(dbn='mysql', db='nianshi', user='root', pw='123', charset="utf8")
 
 def check_pwd(username, password):
     records = db.select('login', where='username=$username', vars=locals())
@@ -37,7 +37,7 @@ def get_post(id):
 def new_post(title, text, blog_class):
     db.insert('blog', title=title, content=text,
               blog_class = blog_class,
-              posted_on=datetime.datetime.utcnow())
+              posted_on=datetime.datetime.now())
 
 
 def del_post(id):
@@ -55,3 +55,18 @@ def transform_datestr(posted_on):
 
 def get_blog_class():
     return db.select('blog_class')
+
+def get_blogs_programming():
+    return db.select('blog', where='blog_class=1', order='id desc')
+
+def get_blogs_deeplearing():
+    return db.select('blog', where='blog_class=2', order='id desc')
+
+def get_blogs_testing():
+    return db.select('blog', where='blog_class=3', order='id desc')
+
+def get_blogs_perfect():
+    return db.select('blog', where='blog_class=4', order='id desc')
+
+
+

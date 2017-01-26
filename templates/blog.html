@@ -1,4 +1,4 @@
-$def with (result=False, info='')
+$def with (result=False, info='', blogs=[[],[],[],[]])
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -44,15 +44,6 @@ $def with (result=False, info='')
                   <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/log_out">退出</a></li>
                 </ul>
               </li>
-<!--             <li class="col-lg-4 col-md-4">
-              <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">博客分类</button>
-                <ul id="logout" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                  <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/1">Python</a></li>
-                  <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/2">DeepLearning</a></li>
-                  <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/3">Testing</a></li>
-                </ul>
-            </li> -->
-<!--             <li><a href="">Overview</a></li> -->
           </ul>  
         </nav> 
       </div>
@@ -64,21 +55,29 @@ $def with (result=False, info='')
           <i class="fa fa-times"></i>
           <div class="square"></div>
           <h2 class="templatemo-inline-block">基础编程</h2><hr>
-          <ul class="list-group">
-            <li class="list-group-item">Python</li>
-            <li class="list-group-item">DeepLearning</li>
-            <li class="list-group-item">Testing</li>
-          </ul>
+          <table class="table table-striped">
+            <tbody>
+              $for blog in blogs[0]:
+                <tr>
+                  <td><a href="/view/$blog.id">$blog.title</a></td>
+                  <td>$blog.posted_on</td>
+                </tr>
+            </tbody>
+          </table>
         </div>
         <div class="templatemo-content-widget white-bg col-2">
           <i class="fa fa-times"></i>
           <div class="square"></div>
           <h2 class="templatemo-inline-block">深度学习</h2><hr>
-          <ul class="list-group">
-            <li class="list-group-item">Python</li>
-            <li class="list-group-item">DeepLearning</li>
-            <li class="list-group-item">Testing</li>
-          </ul>
+          <table class="table table-striped">
+            <tbody>
+              $for blog in blogs[1]:
+                <tr>
+                  <td><a href="/view/$blog.id">$blog.title</a></td>
+                  <td>$blog.posted_on</td>
+                </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <div class="templatemo-flex-row flex-content-row">
@@ -86,21 +85,29 @@ $def with (result=False, info='')
           <i class="fa fa-times"></i>
           <div class="square"></div>
           <h2 class="templatemo-inline-block">测试相关</h2><hr>
-          <ul class="list-group">
-            <li class="list-group-item">Python</li>
-            <li class="list-group-item">DeepLearning</li>
-            <li class="list-group-item">Testing</li>
-          </ul>     
+          <table class="table table-striped">
+            <tbody>
+              $for blog in blogs[2]:
+                <tr>
+                  <td><a href="/view/$blog.id">$blog.title</a></td>
+                  <td>$blog.posted_on</td>
+                </tr>
+            </tbody>
+          </table>    
         </div>
         <div class="templatemo-content-widget white-bg col-2">
           <i class="fa fa-times"></i>
           <div class="square"></div>
           <h2 class="templatemo-inline-block">精品博客</h2><hr>
-          <ul class="list-group">
-            <li class="list-group-item">Python</li>
-            <li class="list-group-item">DeepLearning</li>
-            <li class="list-group-item">Testing</li>
-          </ul>
+          <table class="table table-striped">
+            <tbody>
+              $for blog in blogs[3]:
+                <tr>
+                  <td><a href="/view/$blog.id">$blog.title</a></td>
+                  <td>$blog.posted_on</td>
+                </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
