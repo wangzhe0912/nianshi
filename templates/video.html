@@ -1,4 +1,4 @@
-$def with (blogs=[[],[],[],[]], session=None)
+$def with (video=[[],[],[],[]], session=None)
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -21,11 +21,10 @@ $def with (blogs=[[],[],[],[]], session=None)
     </div>
     <nav class="templatemo-left-nav">          
       <ul>
-        <li><a href="/blog"><i class="fa fa-users fa-fw"></i>博客主页</a></li>
-        <li><a href="/index"><i class="fa fa-users fa-fw"></i>目录</a></li>
+        <li><a href="/video"><i class="fa fa-users fa-fw"></i>视频主页</a></li>
+        <li><a href="/index_video"><i class="fa fa-users fa-fw"></i>目录</a></li>
         $if session.privilege == 2:
-          <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
-          <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+          <li><a href="/upload_video"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>
@@ -55,14 +54,14 @@ $def with (blogs=[[],[],[],[]], session=None)
         <div class="templatemo-content-widget white-bg col-2">
           <i class="fa fa-times"></i>
           <div class="square"></div>
-          <h2 class="templatemo-inline-block">基础编程</h2>
+          <h2 class="templatemo-inline-block">Python视频</h2>
           <!-- <div class="divcss5-right"> -->
-          <a class="btn btn-default" href="/index_basic" role="button" style="float:right;">更多</a>
+          <a class="btn btn-default" href="/index_python_video" role="button" style="float:right;">更多</a>
           <!-- </div> -->
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in blogs[0]:
+              $for blog in video[0]:
                 <tr>
                   <td><a href="/view/$blog.id">$blog.title</a></td>
                   <td>$blog.posted_on</td>
@@ -73,12 +72,12 @@ $def with (blogs=[[],[],[],[]], session=None)
         <div class="templatemo-content-widget white-bg col-2">
           <i class="fa fa-times"></i>
           <div class="square"></div>
-          <h2 class="templatemo-inline-block">深度学习</h2>
-          <a class="btn btn-default" href="/index_dl" role="button" style="float:right;">更多</a>
+          <h2 class="templatemo-inline-block">数据库视频</h2>
+          <a class="btn btn-default" href="/index_sql_video" role="button" style="float:right;">更多</a>
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in blogs[1]:
+              $for blog in video[1]:
                 <tr>
                   <td><a href="/view/$blog.id">$blog.title</a></td>
                   <td>$blog.posted_on</td>
@@ -92,11 +91,11 @@ $def with (blogs=[[],[],[],[]], session=None)
           <i class="fa fa-times"></i>
           <div class="square"></div>
           <h2 class="templatemo-inline-block">测试相关</h2>
-          <a class="btn btn-default" href="/index_test" role="button" style="float:right;">更多</a>
+          <a class="btn btn-default" href="/index_test_video" role="button" style="float:right;">更多</a>
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in blogs[2]:
+              $for blog in video[2]:
                 <tr>
                   <td><a href="/view/$blog.id">$blog.title</a></td>
                   <td>$blog.posted_on</td>
@@ -107,12 +106,12 @@ $def with (blogs=[[],[],[],[]], session=None)
         <div class="templatemo-content-widget white-bg col-2">
           <i class="fa fa-times"></i>
           <div class="square"></div>
-          <h2 class="templatemo-inline-block">精品博客</h2>
-          <a class="btn btn-default" href="/index_perfect" role="button" style="float:right;">更多</a>
+          <h2 class="templatemo-inline-block">深度学习</h2>
+          <a class="btn btn-default" href="/index_dl_video" role="button" style="float:right;">更多</a>
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in blogs[3]:
+              $for blog in video[3]:
                 <tr>
                   <td><a href="/view/$blog.id">$blog.title</a></td>
                   <td>$blog.posted_on</td>

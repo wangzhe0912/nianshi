@@ -22,7 +22,7 @@ if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
 
-web.config.debug = True
+web.config.debug = False
 
 #整个网站的url映射
 urls = ('/login', 'Login',
@@ -36,6 +36,11 @@ urls = ('/login', 'Login',
         '/', 'Hello',
         #editor
         '/view/(\d+)', 'View',
+        '/index', 'Index',
+        '/index_basic', 'IndexBasic',
+        '/index_dl', 'IndexDl',
+        '/index_test', 'IndexTest',
+        '/index_perfect', 'IndexPerfect',
 #         '/new', 'New',
         '/upload_blog', 'UploadBlog',
         '/delete/(\d+)', 'Delete',
@@ -57,6 +62,7 @@ web.config._session = session
 
 #配置template
 render = web.template.render('templates', base='base')
+
 config = web.storage(
     site_name='博客',
     datestr=model.transform_datestr
@@ -67,13 +73,8 @@ config = web.storage(
 #访问主页
 class Hello(object):
     def GET(self):
-        try:
-            if session.login_status==1:
-                return render.homepage(True, session.username)
-            else:
-                return render.homepage(False, '')
-        except:
-            return render.homepage(False, '')
+        return render.homepage(session=session)
+    
         
 #访问登录页
 class Login(object):
@@ -130,7 +131,7 @@ class Blog(object):
            
     def GET(self):
         blogs = self.get_blogs_for_four_parts()
-        return render.blog(blogs=blogs)
+        return render.blog(blogs=blogs, session=session)
 
 #博客编辑页
 class Editor(object):
@@ -235,13 +236,29 @@ class UploadBlog(object):
 
 #工具页
 class Tools(object):
+    def get_blogs_for_four_parts(self):
+        result_python = list(model.get_video_python())[:6]
+        result_sql = list(model.get_video_sql())[:6]
+        result_testing = list(model.get_video_testing())[:6]
+        result_dl = list(model.get_video_dl())[:6]
+        return [result_python, result_sql, result_testing, result_dl]
+           
     def GET(self):
-        return u"工具"
+        videos = self.get_videos_for_four_parts()
+        return render.video(video=videos, session=session)
 
 #视频页
 class Video(object):
+    def get_videos_for_four_parts(self):
+        result_python = list(model.get_video_python())[:6]
+        result_sql = list(model.get_video_sql())[:6]
+        result_testing = list(model.get_video_testing())[:6]
+        result_dl = list(model.get_video_dl())[:6]
+        return [result_python, result_sql, result_testing, result_dl]
+           
     def GET(self):
-        return u"视频"
+        videos = self.get_videos_for_four_parts()
+        return render.video(video=videos, session=session)
        
 #关于页
 class About(object):
@@ -258,7 +275,37 @@ class Contact(object):
 class Index:
     def GET(self):
         posts = model.get_posts()
-        return render.index(posts)
+        return render.index(posts, session=session)
+    
+    def POST(self):
+        posts = model.get_posts()
+        return render.index(posts, session=session)
+
+
+class IndexBasic(object):
+    def GET(self):
+        posts = list(model.get_basic_posts())
+        print posts
+        print len(list(posts))
+        return render.index(posts, session=session)
+
+
+class IndexDl(object):
+    def GET(self):
+        posts = list(model.get_dl_posts())
+        return render.index(posts, session=session)
+    
+    
+class IndexTest(object):
+    def GET(self):
+        posts = list(model.get_test_posts())
+        return render.index(posts, session=session)
+    
+    
+class IndexPerfect(object):
+    def GET(self):
+        posts = list(model.get_perfect_posts())
+        return render.index(posts, session=session)
 
 
 class View:
@@ -291,9 +338,9 @@ class New:
 
 
 class Delete:
-    def POST(self, id):
+    def GET(self, id):
         model.del_post(int(id))
-        raise web.seeother('/')
+        raise web.seeother('/index')
 
 
 class Edit:
@@ -312,20 +359,20 @@ class Edit:
         raise web.seeother('/')
 
 
-class Imgs:
-    def GET(self, name):
-        ext = name.split(".")[-1]
-        cType = {
-            "png": "images/png",
-            "jpg": "images/jpeg",
-            "gif": "images/gif",
-            "ico": "images/x-icon"
-        }
-        if name in os.listdir('imgs'):
-            web.header("Content-Type", cType[ext])
-            return open('imgs/%s' % name, "rb").read()
-        else:
-            raise web.notfound()
+# class Imgs:
+#     def GET(self, name):
+#         ext = name.split(".")[-1]
+#         cType = {
+#             "png": "images/png",
+#             "jpg": "images/jpeg",
+#             "gif": "images/gif",
+#             "ico": "images/x-icon"
+#         }
+#         if name in os.listdir('imgs'):
+#             web.header("Content-Type", cType[ext])
+#             return open('imgs/%s' % name, "rb").read()
+#         else:
+#             raise web.notfound()
 
 
 if __name__ == '__main__':

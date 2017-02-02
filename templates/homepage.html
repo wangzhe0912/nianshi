@@ -1,15 +1,19 @@
-$def with (result=False, info='')
+$def with (session=None)
 <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
     <div class="container topnav">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                $if not result:
+                $if not session:
+                    <li>
+                        <a href="/login">登陆</a>
+                    </li>
+                $elif session.login_status == 0:
                     <li>
                         <a href="/login">登陆</a>
                     </li>
                 $else:
                     <li>
-                        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">$info</button>
+                        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">$session.username</button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/log_out">退出</a></li>
                         </ul>
@@ -46,7 +50,7 @@ $def with (result=False, info='')
                             <a href="/tools" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">工具</span></a>
                         </li>
                         <li>
-                            <a href="/video" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">为你而录的视频</span></a>
+                            <a href="/video" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">视频</span></a>
                         </li>
                     </ul>
                 </div>

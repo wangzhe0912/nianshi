@@ -1,13 +1,23 @@
 $def with(post,form)
-<h1>编辑 $form.d.title</h1>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand">菜单栏</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li><a href="/blog">博客首页</a></li>
+            <li><a href="#">文章目录</a></li>
+        </ul>
+    </div>
+    </div>
+</nav>
+
 <form action="" method="post">
     $:form.render_css()
     <script type="text/javascript">
         UE.getEditor('content');
 
     </script>
-</form>
-<h2>删除</h2>
-<form action="/delete/$post.id" method="post">
-    <input type="submit" value="删除日志"/>
 </form>

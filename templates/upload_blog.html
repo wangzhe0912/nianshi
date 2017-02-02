@@ -1,34 +1,100 @@
 $def with (blog_classes)
-<div class="col-xs-5 col-sm-5 col-md-offset-3">
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-    <div class="navbar-header">
-        <a class="navbar-brand">菜单栏</a>
+<!-- <div class="col-xs-5 col-sm-5 col-md-offset-3"> -->
+<div class="templatemo-flex-row">
+  <div class="templatemo-sidebar">
+    <header class="templatemo-site-header">
+      <div class="square"></div>
+      <h1>念师</h1>
+    </header>
+    <div class="profile-photo-container">
+      <img id="profile" src="../static/img/profile-photo.jpeg" alt="Profile Photo" class="img-responsive">  
+      <div class="profile-photo-overlay"></div>
+    </div>      
+    <!-- Search box -->
+    <form class="templatemo-search-form" role="search" action="/search">
+      <div class="input-group">
+          <button type="submit" class="fa fa-search"></button>
+          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+      </div>
+    </form>
+    <div class="mobile-menu-icon">
+        <i class="fa fa-bars"></i>
     </div>
-    <div>
-        <ul class="nav navbar-nav">
-            <li><a href="/blog">博客首页</a></li>
-            <li><a href="#">文章目录</a></li>
-        </ul>
-    </div>
-    </div>
-</nav>
-
-<div class="form-group" >
-<form role="form" action="/upload_blog" method="POST" id="blog_post" enctype="multipart/form-data">
-    <label for="title">文章名</label>
-    <input type="text" class="form-control" name="title" placeholder="请输入标题">
-    <label for="blog_class">博客类型</label>
-    <select class="form-control" name="blog_class" form="blog_post">
-        $for blog_class in blog_classes:
-            <option value="$blog_class.id">$blog_class.blog_class_name</option>
-    </select>
-    <div class="form-group">
-        <label for="inputfile">文件输入</label>
-        <input type="file" id="inputfile" name="inputfile">
-    </div>
-  <button type="submit" class="btn btn-default" form="blog_post">提交</button>
+    <nav class="templatemo-left-nav">          
+      <ul>
+        <li><a href="/blog"><i class="fa fa-users fa-fw"></i>博客主页</a></li>
+        <li><a href="/blog"><i class="fa fa-users fa-fw"></i>目录</a></li>
+        <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
+        <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+        <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
+      </ul>
+    </nav>
   </div>
-</form>
+    <div class="form-group templatemo-content col-1 light-gray-bg view_page">
+    <form role="form" action="/upload_blog" method="POST" id="blog_post" enctype="multipart/form-data">
+        <label for="title">文章名</label>
+        <input type="text" class="form-control" name="title" placeholder="请输入标题">
+        <label for="blog_class">博客类型</label>
+        <select class="form-control" name="blog_class" form="blog_post">
+            $for blog_class in blog_classes:
+                <option value="$blog_class.id">$blog_class.blog_class_name</option>
+        </select>
+        <div class="form-group">
+            <label for="inputfile">文件输入</label>
+            <input type="file" id="inputfile" name="inputfile">
+        </div>
+      <button type="submit" class="btn btn-default" form="blog_post">提交</button>
+    </form>
+    </div>
 </div>
-</div>
+<style>
+body {
+    background-color: aliceblue;
+    text-align: center;
+}
+</style>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+<link href="../static/css/font-awesome.min.css" rel="stylesheet">
+<link href="../static/css/templatemo-style.css" rel="stylesheet">   
+<script type="text/javascript" src="../static/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+<style>
+#dropdownMenu1 {
+  padding: 0px 50px;
+  background-color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  color: #7f7f7f;
+}
+#logout {
+  min-width: 0px;
+  padding: 0px 40px;
+}
+#out {
+  border-color: white;
+}
+.list-group-item {
+  border: none;
+}
+#profile: {
+  background-color: rgba(4, 152, 114, 0); 
+}
+.view_page {
+  background-image:url(../static/img/view_background.jpg);
+  background-color: rgba(4, 152, 114, 0); 
+  padding: 40px;
+}
+.title {
+  text-align:center;
+  /*padding: 40px;*/
+}
+.title > h1 {
+  font-size: 4em;
+  color: rgba(85, 85, 85, 0.72);
+  padding: 10px;
+}
+.content {
+  font-size: 1.5em;
+  color: #8a433b;
+  padding: 40px;
+}
+</style>

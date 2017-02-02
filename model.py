@@ -33,6 +33,19 @@ def get_post(id):
     except IndexError:
         return None
 
+def get_basic_posts():
+    return db.select('blog', where='blog_class=1', order='id desc')
+
+def get_dl_posts():
+    return db.select('blog', where='blog_class=2', order='id desc')
+
+def get_test_posts():
+    return db.select('blog', where='blog_class=3', order='id desc')
+
+def get_perfect_posts():
+    return db.select('blog', where='blog_class=4', order='id desc')
+
+
 
 def new_post(title, text, blog_class):
     db.insert('blog', title=title, content=text,
@@ -67,6 +80,21 @@ def get_blogs_testing():
 
 def get_blogs_perfect():
     return db.select('blog', where='blog_class=4', order='id desc')
+
+def get_video_class():
+    return db.select('video_class')
+
+def get_video_python():
+    return db.select('video', where='video_class=1', order='id desc')
+
+def get_video_sql():
+    return db.select('video', where='video_class=2', order='id desc')
+
+def get_video_testing():
+    return db.select('video', where='video_class=3', order='id desc')
+
+def get_video_dl():
+    return db.select('video', where='video_class=4', order='id desc')
 
 
 
