@@ -54,14 +54,14 @@ urls = ('/login', 'Login',
         '/index_video_fe', 'IndexVideoFE',
         '/index_video_dl', 'IndexVideoDL',
         
-        '/tools', 'Tools',
+        '/tool', 'Tool',
         '/new_tool', 'NewTool',
         '/delete_tool/(\d+)', 'DeleteTool',
         '/edit_tool/(\d+)', 'EditTool',
         '/index_tool', 'IndexTool',
         '/view_tool/(\d+)', 'ViewTool',
         '/index_tool_software', 'IndexToolSoftware',
-        '/index_tool_database', 'IndexToolDB',
+        '/index_tool_dl', 'IndexToolDL',
         '/index_tool_book', 'IndexToolBook',
         '/index_tool_ai', 'IndexToolAI',
         
@@ -81,7 +81,8 @@ web.config._session = session
 
 from website_class import Login, LogOut, Hello, About, Contact
 from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl, IndexPerfect, IndexTest, View
-from video_class import Video, NewVideo
+from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo
+from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL, IndexToolSoftware, DeleteTool, EditTool, ViewTool
 # from tool_class import 
 
 #配置template
@@ -92,28 +93,6 @@ config = web.storage(
     site_name='博客',
     datestr=model.transform_datestr
 )
-
-
-#工具页
-class Tools(object):
-    def get_blogs_for_four_parts(self):
-        result_python = list(model.get_video_python())[:6]
-        result_sql = list(model.get_video_sql())[:6]
-        result_testing = list(model.get_video_testing())[:6]
-        result_dl = list(model.get_video_dl())[:6]
-        return [result_python, result_sql, result_testing, result_dl]
-           
-    def GET(self):
-        videos = self.get_videos_for_four_parts()
-        return render.video(video=videos, session=session)
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

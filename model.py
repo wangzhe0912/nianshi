@@ -84,10 +84,14 @@ def new_video(title, describe, video_class, url, password):
 def del_video(id):
     db.delete('video', where='id=$id', vars=locals())
 
-def update_video(title, describe, video_class, resouce_id):
+def update_video(id, title, describe, video_class, url, password):
+    resource_id = db.insert('resource', url=url, password=password)
     db.update('video', where='id=$id', vars=locals(),
-              title=title, describe=describe,
-              video_class = video_class, resouce_id=resouce_id)
+              title=title, detail=describe,
+              video_class = video_class, resource_id=resource_id)
+
+def get_video(id):
+    return db.select('video', where='id=$id', vars=locals())[0]
 
 def get_videos():
     return db.select('video', order='id desc')
@@ -109,5 +113,46 @@ def get_video_fe():
 
 def get_video_test():
     return db.select('video', where='video_class=5', order='id desc')
+
+
+def new_tool(title, describe, tool_class, url, password):
+    resource_id = db.insert('resource', url=url, password=password)
+    db.insert('tool', title=title, detail=describe,
+              tool_class = tool_class, resource_id=resource_id,
+              posted_on=datetime.datetime.now())
+
+def del_tool(id):
+    db.delete('tool', where='id=$id', vars=locals())
+
+def update_tool(id, title, describe, tool_class, url, password):
+    resource_id = db.insert('resource', url=url, password=password)
+    db.update('tool', where='id=$id', vars=locals(),
+              title=title, detail=describe,
+              tool_class = tool_class, resource_id=resource_id)
+
+def get_tool(id):
+    return db.select('tool', where='id=$id', vars=locals())[0]
+
+def get_tools():
+    return db.select('tool', order='id desc')
+
+def get_tool_class():
+    return db.select('tool_class')
+
+def get_tool_software():
+    return db.select('tool', where='tool_class=1', order='id desc')
+
+def get_tool_book():
+    return db.select('tool', where='tool_class=2', order='id desc')
+
+def get_tool_ai():
+    return db.select('tool', where='tool_class=3', order='id desc')
+
+def get_tool_dl():
+    return db.select('tool', where='tool_class=4', order='id desc')
+
+
+def get_resource(id):
+    return db.select('resource', where='id=$id', vars=locals())[0]
 
 

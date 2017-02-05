@@ -1,0 +1,153 @@
+$def with (tools=[[],[],[],[]], session=None)
+<div class="templatemo-flex-row">
+  <div class="templatemo-sidebar">
+    <header class="templatemo-site-header">
+      <div class="square"></div>
+      <h1>念师</h1>
+    </header>
+    <div class="profile-photo-container">
+      <img id="profile" src="../static/img/profile-photo.jpeg" alt="Profile Photo" class="img-responsive">  
+      <div class="profile-photo-overlay" id="profile-div"></div>
+    </div>      
+    <!-- Search box -->
+    <form class="templatemo-search-form" role="search" action="/search">
+      <div class="input-group">
+          <button type="submit" class="fa fa-search"></button>
+          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+      </div>
+    </form>
+    <div class="mobile-menu-icon">
+        <i class="fa fa-bars"></i>
+    </div>
+    <nav class="templatemo-left-nav">          
+      <ul>
+        <li><a href="/tool"><i class="fa fa-users fa-fw"></i>工具主页</a></li>
+        <li><a href="/index_tool"><i class="fa fa-users fa-fw"></i>目录</a></li>
+        $if session.privilege == 2:
+          <li><a href="/new_tool"><i class="fa fa-sliders fa-fw"></i>上传工具</a></li>
+        <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- Main content --> 
+  <div class="templatemo-content col-1 light-gray-bg">
+    <div class="templatemo-top-nav-container">
+      <div class="row">
+        <nav class="templatemo-top-nav col-lg-12 col-md-12">
+          <ul class="text-uppercase">
+            $if not session.privilege:
+              <li class="col-lg-4 col-md-4"><a href="/login">登录</a></li>
+            $else:
+              <li class="col-lg-4 col-md-4">
+                <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">$session.username</button>
+                <ul id="logout" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <li role="presentation"><a id="out" role="menuitem" tabindex="-1" href="/log_out">退出</a></li>
+                </ul>
+              </li>
+          </ul>  
+        </nav> 
+      </div>
+    </div>
+
+    <div class="templatemo-content-container">
+      <div class="templatemo-flex-row flex-content-row">
+        <div class="templatemo-content-widget white-bg col-2">
+          <i class="fa fa-times"></i>
+          <div class="square"></div>
+          <h2 class="templatemo-inline-block">软件</h2>
+          <!-- <div class="divcss5-right"> -->
+          <a class="btn btn-default" href="/index_tool_software" role="button" style="float:right;">更多</a>
+          <!-- </div> -->
+          <hr>
+          <table class="table table-striped">
+            <tbody>
+              $for tool in tools[0]:
+                <tr>
+                  <td><a href="/view_tool/$tool.id">$tool.title</a></td>
+                  <td>$tool.posted_on</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="templatemo-content-widget white-bg col-2">
+          <i class="fa fa-times"></i>
+          <div class="square"></div>
+          <h2 class="templatemo-inline-block">书籍</h2>
+          <a class="btn btn-default" href="/index_tool_book" role="button" style="float:right;">更多</a>
+          <hr>
+          <table class="table table-striped">
+            <tbody>
+              $for tool in tools[1]:
+                <tr>
+                  <td><a href="/view_tool/$tool.id">$tool.title</a></td>
+                  <td>$tool.posted_on</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="templatemo-flex-row flex-content-row">
+        <div class="templatemo-content-widget white-bg col-2">
+          <i class="fa fa-times"></i>
+          <div class="square"></div>
+          <h2 class="templatemo-inline-block">AI应用</h2>
+          <a class="btn btn-default" href="/index_tool_ai" role="button" style="float:right;">更多</a>
+          <hr>
+          <table class="table table-striped">
+            <tbody>
+              $for tool in tools[2]:
+                <tr>
+                  <td><a href="/view_tool/$tool.id">$tool.title</a></td>
+                  <td>$tool.posted_on</td>
+                </tr>
+            </tbody>
+          </table>    
+        </div>
+        <div class="templatemo-content-widget white-bg col-2">
+          <i class="fa fa-times"></i>
+          <div class="square"></div>
+          <h2 class="templatemo-inline-block">深度学习训练集</h2>
+          <a class="btn btn-default" href="/index_tool_dl" role="button" style="float:right;">更多</a>
+          <hr>
+          <table class="table table-striped">
+            <tbody>
+              $for tool in tools[3]:
+                <tr>
+                  <td><a href="/view_tool/$tool.id">$tool.title</a></td>
+                  <td>$tool.posted_on</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+<link href="../static/css/font-awesome.min.css" rel="stylesheet">
+<link href="../static/css/templatemo-style.css" rel="stylesheet">   
+<script type="text/javascript" src="../static/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+<style>
+#dropdownMenu1 {
+  padding: 0px 50px;
+  background-color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  color: #7f7f7f;
+}
+#logout {
+  min-width: 0px;
+  padding: 0px 40px;
+}
+#out {
+  border-color: white;
+}
+.list-group-item {
+  border: none;
+}
+#profile-div {
+  background-color: rgba(4, 152, 114, 0); 
+}
+</style>

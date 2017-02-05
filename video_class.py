@@ -48,37 +48,71 @@ class NewVideo(object):
 
 
 class DeleteVideo(object):
-    pass
+    def GET(self, id):
+        if session.privilege != 2:
+            return render_no_base.not_found404()
+        model.del_video(int(id))
+        raise web.seeother('/index_video')
 
 
 class EditVideo(object):
-    pass
+    def GET(self, id):
+        if session.privilege != 2:
+            return render_no_base.not_found404()
+        data = model.get_video(int(id))
+        resource_id = data.resource_id
+        resource_data = model.get_resource(resource_id)
+        video_classes = list(model.get_video_class())
+        return render.edit_video(data, resource_data, video_classes, session, id)
+
+    def POST(self, id):
+        if session.privilege != 2:
+            return render_no_base.not_found404()
+        data = web.input()
+        model.update_video(int(id), data.title, data.describe,
+                          data.video_class, data.url, data.password)
+        raise web.seeother('/index_video')
 
 
 class IndexVideo(object):
-    pass
+    def GET(self):
+        videos = model.get_videos()
+        return render.index_video(videos, session=session)
 
 
 class ViewVideo(object):
-    pass
+    def GET(self, id):
+        video = model.get_video(int(id))
+        resource_id = video.resource_id
+        resource = model.get_resource(resource_id)
+        return render.view_video(video, resource, session=session)
 
 
 class IndexVideoPython(object):
-    pass
+    def GET(self):
+        videos = list(model.get_video_python())
+        return render.index_video(videos, session=session)
 
 
 class IndexVideoDB(object):
-    pass
+    def GET(self):
+        videos = list(model.get_video_sql())
+        return render.index_video(videos, session=session)
 
 
 class IndexVideoTest(object):
-    pass
-
+    def GET(self):
+        videos = list(model.get_video_test())
+        return render.index_video(videos, session=session)
 
 
 class IndexVideoFE(object):
-    pass
+    def GET(self):
+        videos = list(model.get_video_fe())
+        return render.index_video(videos, session=session)
 
 
 class IndexVideoDL(object):
-    pass
+    def GET(self):
+        videos = list(model.get_video_dl())
+        return render.index_video(videos, session=session)
