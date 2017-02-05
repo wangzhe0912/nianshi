@@ -8,7 +8,11 @@ Created on Sat Jan 21 21:46:48 2017
 import web
 import datetime
 
-db = web.database(dbn='mysql', db='nianshi', user='root', pw='123', charset="utf8")
+db = web.database(dbn='mysql', db='nianshi', user='root', pw='sdl19940208', charset="utf8")
+
+def transform_datestr(posted_on):
+    datetime_obj = datetime.datetime.strptime(posted_on, '%Y-%m-%d %H:%M:%S.%f')
+    return web.datestr(datetime_obj)
 
 def check_pwd(username, password):
     records = db.select('login', where='username=$username', vars=locals())
@@ -22,9 +26,20 @@ def check_pwd(username, password):
             result = {"status": False, "result": None, "desc": "password is not correct!"}
     return result
 
+def new_post(title, text, blog_class):
+    db.insert('blog', title=title, content=text,
+              blog_class = blog_class,
+              posted_on=datetime.datetime.now())
+
+def del_post(id):
+    db.delete('blog', where='id=$id', vars=locals())
+
+def update_post(id, title, text):
+    db.update('blog', where='id=$id', vars=locals(),
+              title=title, content=text)
+
 def get_posts():
     return db.select('blog', order='id desc')
-
 
 def get_post(id):
     try:
@@ -45,41 +60,37 @@ def get_test_posts():
 def get_perfect_posts():
     return db.select('blog', where='blog_class=4', order='id desc')
 
-
-
-def new_post(title, text, blog_class):
-    db.insert('blog', title=title, content=text,
-              blog_class = blog_class,
-              posted_on=datetime.datetime.now())
-
-
-def del_post(id):
-    db.delete('blog', where='id=$id', vars=locals())
-
-
-def update_post(id, title, text):
-    db.update('blog', where='id=$id', vars=locals(),
-              title=title, content=text)
-
-
-def transform_datestr(posted_on):
-    datetime_obj = datetime.datetime.strptime(posted_on, '%Y-%m-%d %H:%M:%S.%f')
-    return web.datestr(datetime_obj)
-
 def get_blog_class():
     return db.select('blog_class')
 
-def get_blogs_programming():
-    return db.select('blog', where='blog_class=1', order='id desc')
+# def get_blogs_programming():
+#     return db.select('blog', where='blog_class=1', order='id desc')
+# 
+# def get_blogs_deeplearing():
+#     return db.select('blog', where='blog_class=2', order='id desc')
+# 
+# def get_blogs_testing():
+#     return db.select('blog', where='blog_class=3', order='id desc')
+# 
+# def get_blogs_perfect():
+#     return db.select('blog', where='blog_class=4', order='id desc')
 
-def get_blogs_deeplearing():
-    return db.select('blog', where='blog_class=2', order='id desc')
+def new_video(title, describe, video_class, url, password):
+    resource_id = db.insert('resource', url=url, password=password)
+    db.insert('video', title=title, detail=describe,
+              video_class = video_class, resource_id=resource_id,
+              posted_on=datetime.datetime.now())
 
-def get_blogs_testing():
-    return db.select('blog', where='blog_class=3', order='id desc')
+def del_video(id):
+    db.delete('video', where='id=$id', vars=locals())
 
-def get_blogs_perfect():
-    return db.select('blog', where='blog_class=4', order='id desc')
+def update_video(title, describe, video_class, resouce_id):
+    db.update('video', where='id=$id', vars=locals(),
+              title=title, describe=describe,
+              video_class = video_class, resouce_id=resouce_id)
+
+def get_videos():
+    return db.select('video', order='id desc')
 
 def get_video_class():
     return db.select('video_class')
@@ -90,11 +101,13 @@ def get_video_python():
 def get_video_sql():
     return db.select('video', where='video_class=2', order='id desc')
 
-def get_video_testing():
+def get_video_dl():
     return db.select('video', where='video_class=3', order='id desc')
 
-def get_video_dl():
+def get_video_fe():
     return db.select('video', where='video_class=4', order='id desc')
 
+def get_video_test():
+    return db.select('video', where='video_class=5', order='id desc')
 
 

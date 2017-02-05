@@ -1,4 +1,4 @@
-$def with (blog_classes)
+$def with (video_classes, session)
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -21,48 +21,35 @@ $def with (blog_classes)
     </div>
     <nav class="templatemo-left-nav">          
       <ul>
-        <li><a href="/blog"><i class="fa fa-users fa-fw"></i>博客主页</a></li>
-        <li><a href="/blog"><i class="fa fa-users fa-fw"></i>目录</a></li>
-        <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
-        <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+        <li><a href="/video"><i class="fa fa-users fa-fw"></i>视频主页</a></li>
+        <li><a href="/index_video"><i class="fa fa-users fa-fw"></i>目录</a></li>
+        $if session.privilege == 2:
+          <li><a href="/new_video"><i class="fa fa-sliders fa-fw"></i>上传视频</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>
   </div>
-  <div class="templatemo-content col-1 light-gray-bg view_page">
-    <form role="form" action="/editor" method="POST" id="blog_post">
-      <div class="form-group">
-      <div class="col-xs-6 col-sm-6">
-        <label for="title">文章名</label>
-        <input type="text" class="form-control" name="title" placeholder="请输入标题">
-      </div>
-      <div class="col-xs-4 col-sm-4">
-        <label for="blog_class">博客类型</label>
-        <select class="form-control" name="blog_class" form="blog_post">
-            $for blog_class in blog_classes:
-                <option value="$blog_class.id">$blog_class.blog_class_name</option>
+  <div class="form-group templatemo-content col-1 light-gray-bg view_page">
+    <form role="form" action="/new_video" method="POST" id="video_post" enctype="multipart/form-data">
+        <label for="title">视频名称</label>
+        <input type="text" class="form-control" name="title" placeholder="请输入名称">
+        <label for="video_class">视频类型类型</label>
+        <select class="form-control" name="video_class" form="video_post">
+            $for video_class in video_classes:
+                <option value="$video_class.id">$video_class.video_class_name</option>
         </select>
-      </div>
-      <div class="col-xs-2 col-sm-2">
-      <button type="submit" class="btn btn-default" form="blog_post">提交</button>
-      </div>
-      <br><br>
-      <div class="col-xs-9 col-sm-9">
-        <label class="sr-only" for="content">内容</label>
-        <textarea rows="10" id="content" name="content" cols="200"></textarea>
-      </div>
-      </div>
-      <script type="text/javascript">
-            UE.getEditor('content');
-      </script>
+        <label for="describe">视频说明</label>
+        <input type="textarea" class="form-control" name="describe" placeholder="请输入详细描述说明">
+        <label for="url">URL</label>
+        <input type="text" class="form-control" name="url" placeholder="请输入视频URL">
+        <label for="password">下载密码</label>
+        <input type="text" class="form-control" name="password" placeholder="请输入下载密码">
+      <button type="submit" class="btn btn-default" form="video_post">提交</button>
     </form>
+    </div>
+</div>
 
-<style>
-body {
-    background-color: aliceblue;
-    text-align: center;
-}
-</style>
+
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
 <link href="../static/css/font-awesome.min.css" rel="stylesheet">
 <link href="../static/css/templatemo-style.css" rel="stylesheet">   
@@ -85,7 +72,7 @@ body {
 .list-group-item {
   border: none;
 }
-#profile-div: {
+#profile-div {
   background-color: rgba(4, 152, 114, 0); 
 }
 .view_page {

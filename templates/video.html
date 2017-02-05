@@ -1,4 +1,4 @@
-$def with (video=[[],[],[],[]], session=None)
+$def with (videos=[[],[],[],[],[]], session=None)
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -7,7 +7,7 @@ $def with (video=[[],[],[],[]], session=None)
     </header>
     <div class="profile-photo-container">
       <img id="profile" src="../static/img/profile-photo.jpeg" alt="Profile Photo" class="img-responsive">  
-      <div class="profile-photo-overlay"></div>
+      <div class="profile-photo-overlay" id="profile-div"></div>
     </div>      
     <!-- Search box -->
     <form class="templatemo-search-form" role="search" action="/search">
@@ -24,7 +24,7 @@ $def with (video=[[],[],[],[]], session=None)
         <li><a href="/video"><i class="fa fa-users fa-fw"></i>视频主页</a></li>
         <li><a href="/index_video"><i class="fa fa-users fa-fw"></i>目录</a></li>
         $if session.privilege == 2:
-          <li><a href="/upload_video"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+          <li><a href="/new_video"><i class="fa fa-sliders fa-fw"></i>上传视频</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>
@@ -35,7 +35,7 @@ $def with (video=[[],[],[],[]], session=None)
       <div class="row">
         <nav class="templatemo-top-nav col-lg-12 col-md-12">
           <ul class="text-uppercase">
-            $if not session:
+            $if not session.privilege:
               <li class="col-lg-4 col-md-4"><a href="/login">登录</a></li>
             $else:
               <li class="col-lg-4 col-md-4">
@@ -56,15 +56,15 @@ $def with (video=[[],[],[],[]], session=None)
           <div class="square"></div>
           <h2 class="templatemo-inline-block">Python视频</h2>
           <!-- <div class="divcss5-right"> -->
-          <a class="btn btn-default" href="/index_python_video" role="button" style="float:right;">更多</a>
+          <a class="btn btn-default" href="/index_video_python" role="button" style="float:right;">更多</a>
           <!-- </div> -->
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in video[0]:
+              $for video in videos[0]:
                 <tr>
-                  <td><a href="/view/$blog.id">$blog.title</a></td>
-                  <td>$blog.posted_on</td>
+                  <td><a href="/view_video/$video.id">$video.title</a></td>
+                  <td>$video.posted_on</td>
                 </tr>
             </tbody>
           </table>
@@ -73,14 +73,14 @@ $def with (video=[[],[],[],[]], session=None)
           <i class="fa fa-times"></i>
           <div class="square"></div>
           <h2 class="templatemo-inline-block">数据库视频</h2>
-          <a class="btn btn-default" href="/index_sql_video" role="button" style="float:right;">更多</a>
+          <a class="btn btn-default" href="/index_video_db" role="button" style="float:right;">更多</a>
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in video[1]:
+              $for video in videos[1]:
                 <tr>
-                  <td><a href="/view/$blog.id">$blog.title</a></td>
-                  <td>$blog.posted_on</td>
+                  <td><a href="/view_video/$video.id">$video.title</a></td>
+                  <td>$video.posted_on</td>
                 </tr>
             </tbody>
           </table>
@@ -90,15 +90,15 @@ $def with (video=[[],[],[],[]], session=None)
         <div class="templatemo-content-widget white-bg col-2">
           <i class="fa fa-times"></i>
           <div class="square"></div>
-          <h2 class="templatemo-inline-block">测试相关</h2>
-          <a class="btn btn-default" href="/index_test_video" role="button" style="float:right;">更多</a>
+          <h2 class="templatemo-inline-block">深度学习</h2>
+          <a class="btn btn-default" href="/index_video_dl" role="button" style="float:right;">更多</a>
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in video[2]:
+              $for video in videos[2]:
                 <tr>
-                  <td><a href="/view/$blog.id">$blog.title</a></td>
-                  <td>$blog.posted_on</td>
+                  <td><a href="/view_video/$video.id">$video.title</a></td>
+                  <td>$video.posted_on</td>
                 </tr>
             </tbody>
           </table>    
@@ -106,15 +106,31 @@ $def with (video=[[],[],[],[]], session=None)
         <div class="templatemo-content-widget white-bg col-2">
           <i class="fa fa-times"></i>
           <div class="square"></div>
-          <h2 class="templatemo-inline-block">深度学习</h2>
-          <a class="btn btn-default" href="/index_dl_video" role="button" style="float:right;">更多</a>
+          <h2 class="templatemo-inline-block">前端技术</h2>
+          <a class="btn btn-default" href="/index_video_fe" role="button" style="float:right;">更多</a>
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in video[3]:
+              $for video in videos[3]:
                 <tr>
-                  <td><a href="/view/$blog.id">$blog.title</a></td>
-                  <td>$blog.posted_on</td>
+                  <td><a href="/view_video/$video.id">$video.title</a></td>
+                  <td>$video.posted_on</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="templatemo-content-widget white-bg col-2">
+          <i class="fa fa-times"></i>
+          <div class="square"></div>
+          <h2 class="templatemo-inline-block">测试相关</h2>
+          <a class="btn btn-default" href="/index_video_test" role="button" style="float:right;">更多</a>
+          <hr>
+          <table class="table table-striped">
+            <tbody>
+              $for video in videos[4]:
+                <tr>
+                  <td><a href="/view_video/$video.id">$video.title</a></td>
+                  <td>$video.posted_on</td>
                 </tr>
             </tbody>
           </table>
@@ -147,7 +163,7 @@ $def with (video=[[],[],[],[]], session=None)
 .list-group-item {
   border: none;
 }
-#profile: {
+#profile-div {
   background-color: rgba(4, 152, 114, 0); 
 }
 </style>

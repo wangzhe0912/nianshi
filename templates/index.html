@@ -7,7 +7,7 @@ $def with(posts, session={'privilege':0})
     </header>
     <div class="profile-photo-container">
       <img id="profile" src="../static/img/profile-photo.jpeg" alt="Profile Photo" class="img-responsive">  
-      <div class="profile-photo-overlay"></div>
+      <div class="profile-photo-overlay" id="profile-div"></div>
     </div>      
     <!-- Search box -->
     <form class="templatemo-search-form" role="search" action="/search">
@@ -106,7 +106,7 @@ $def with(posts, session={'privilege':0})
 .list-group-item {
   border: none;
 }
-#profile: {
+#profile-div {
   background-color: rgba(4, 152, 114, 0); 
 }
 .view_page {
