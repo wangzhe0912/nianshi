@@ -8,7 +8,7 @@ Created on Sat Jan 21 21:46:48 2017
 import web
 import datetime
 
-db = web.database(dbn='mysql', db='nianshi', user='root', pw='sdl19940208', charset="utf8")
+db = web.database(dbn='mysql', db='nianshi', user='root', pw='Sdl!19940208', charset="utf8")
 
 def transform_datestr(posted_on):
     datetime_obj = datetime.datetime.strptime(posted_on, '%Y-%m-%d %H:%M:%S.%f')
