@@ -27,7 +27,6 @@ web.config.debug = False
 urls = ('/login', 'Login',
         '/log_out', 'LogOut',
         '/', 'Hello',
-        '/about', 'About',
         '/contact', 'Contact',
         
         '/blog', 'Blog',
@@ -79,7 +78,7 @@ app = web.application(urls, globals())
 session = web.session.Session(app, web.session.DiskStore('sessions'), initializer = {'login_status': 0, 'username':'','privilege': 0})
 web.config._session = session
 
-from website_class import Login, LogOut, Hello, About, Contact
+from website_class import Login, LogOut, Hello, Contact
 from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl, IndexPerfect, IndexTest, View
 from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo
 from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL, IndexToolSoftware, DeleteTool, EditTool, ViewTool

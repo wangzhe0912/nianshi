@@ -7,7 +7,8 @@ Created on 2017.2.5
 
 import web
 import model
-
+import smtplib
+from email.mime.text import MIMEText
 
 render = web.template.render('templates', base='base')
 render_no_base = web.template.render('templates')
@@ -62,13 +63,35 @@ class LogOut(object):
         session.login_status = 0
         session.privilege = 0
         web.seeother('/')
-        
-#关于页
-class About(object):
-    def GET(self):
-        return u"关于"
 
 #联系我们页
 class Contact(object):
     def GET(self):
-        return u"联系我们"
+        return render.contact(session=session)
+
+    def POST(self):
+        data = web.input()
+        print data
+        HOST = 'smtp.tju.edu.cn'
+        SUBJECT = data.theme
+        TO = "1658563602@qq.com"
+        FROM = "wangzhe0912@tju.edu.cn"
+        msg = MIMEText('<table width="800" border="0" cellspacing="0" cellpadding="4">\
+              <tr><td bgcolor="#CECFAD" height="20" style="font-size:14px"></td></tr>\
+              <tr><td bgcolor="#EFEBDE" height="100" style="font-size:13px">详细信息：'\
+              + data.comments + '</td></tr>' +\
+              '<tr><td bgcolor="#EFEBDE" height="100" style="font-size:13px">联系方式：'\
+              + data.contact_way + '</td></tr></table>',"html","utf-8")
+        msg['Subject'] = SUBJECT
+        msg['From']=FROM
+        msg['To']=TO
+        try:
+            server = smtplib.SMTP()
+            server.connect(HOST,"25")
+            server.starttls()
+            server.login("wangzhe0912@tju.edu.cn","qxq102132")
+            server.sendmail(FROM, TO, msg.as_string())
+            server.quit()
+        except Exception, e:  
+            print "失败："+str(e)
+        web.seeother('/')       
