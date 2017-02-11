@@ -26,6 +26,17 @@ def check_pwd(username, password):
             result = {"status": False, "result": None, "desc": "password is not correct!"}
     return result
 
+def get_posts_by_keywords(keywords, from_class):
+    from urllib import unquote
+    number = len(keywords)
+    where_sentence = ' where '
+    for keyword in keywords:
+        where_sentence += 'title like "%' + unquote(keyword) + '%" and '
+    print 'select * from ' + from_class + where_sentence[:-4]
+    result = db.query('select * from ' + from_class + where_sentence[:-4])
+    # result = db.select(from_class, where='$where_sentence[:-4]', vars=locals())
+    return result
+
 def new_post(title, text, blog_class):
     db.insert('blog', title=title, content=text,
               blog_class = blog_class,

@@ -108,3 +108,12 @@ class IndexToolDL(object):
     def GET(self):
         tools = list(model.get_tool_dl())
         return render.index_tool(tools, session=session)
+
+
+class SearchTool(object):
+    def POST(self):
+        key_words = web.data().split('=')[1].split('+')
+        print key_words
+        # ["srch-term"].split()
+        posts = list(model.get_posts_by_keywords(key_words, 'tool'))
+        return render.index_tool(posts, session=session)

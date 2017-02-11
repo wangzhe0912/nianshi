@@ -219,3 +219,11 @@ class View:
         post = model.get_post(int(id))
         return render.view(post, session=session)
 
+
+class Search(object):
+    def POST(self):
+        key_words = web.data().split('=')[1].split('+')
+        print key_words
+        # ["srch-term"].split()
+        posts = list(model.get_posts_by_keywords(key_words, 'blog'))
+        return render.index(posts, session=session)

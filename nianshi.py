@@ -40,6 +40,7 @@ urls = ('/login', 'Login',
         '/index_dl', 'IndexDl',
         '/index_test', 'IndexTest',
         '/index_perfect', 'IndexPerfect',
+        '/search', 'Search',
         
         '/video', 'Video',
         '/new_video', 'NewVideo',
@@ -52,6 +53,7 @@ urls = ('/login', 'Login',
         '/index_video_test', 'IndexVideoTest',
         '/index_video_fe', 'IndexVideoFE',
         '/index_video_dl', 'IndexVideoDL',
+        '/search_video', 'SearchVideo',
         
         '/tool', 'Tool',
         '/new_tool', 'NewTool',
@@ -63,6 +65,7 @@ urls = ('/login', 'Login',
         '/index_tool_dl', 'IndexToolDL',
         '/index_tool_book', 'IndexToolBook',
         '/index_tool_ai', 'IndexToolAI',
+        '/search_tool', 'SearchTool',
         
         '/ue_imageUp', Ue_ImageUp,
         '/ue_fileUp', Ue_FileUp,
@@ -79,9 +82,9 @@ session = web.session.Session(app, web.session.DiskStore('sessions'), initialize
 web.config._session = session
 
 from website_class import Login, LogOut, Hello, Contact
-from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl, IndexPerfect, IndexTest, View
-from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo
-from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL, IndexToolSoftware, DeleteTool, EditTool, ViewTool
+from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl, IndexPerfect, IndexTest, View, Search
+from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo, SearchVideo
+from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL, IndexToolSoftware, DeleteTool, EditTool, ViewTool, SearchTool
 # from tool_class import 
 
 #配置template
