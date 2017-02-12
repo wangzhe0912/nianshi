@@ -227,3 +227,29 @@ class Search(object):
         # ["srch-term"].split()
         posts = list(model.get_posts_by_keywords(key_words, 'blog'))
         return render.index(posts, session=session)
+
+
+class NewBlogSet(object):
+    def GET(self):
+        posts = model.get_posts()
+        return render.new_blog_set(posts, session=session)
+
+    def POST(self):
+        post_ids = web.data().split('&')
+        list_result = [information.split('=') for information in post_ids]
+        id_list = []
+        for result in list_result:
+            if result[0] == 'title':
+                title = result[1]
+            if result[0] == 'blog_ids':
+                id_list.append(int(result[1]))
+        series_id = model.new_post_set(unquote(title), 'blog')
+        model.add_blog_series(series_id, id_list)
+        web.seeother('/blog')
+
+
+class ViewBlogSet(object):
+    def GET(self, id):
+        posts = list(model.get_blog_set_posts(id))
+        print posts
+        return render.index(posts, session=session)

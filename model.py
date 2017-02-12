@@ -37,10 +37,37 @@ def get_posts_by_keywords(keywords, from_class):
     # result = db.select(from_class, where='$where_sentence[:-4]', vars=locals())
     return result
 
+def new_contact(theme, comments, contact_way, status):
+    db.insert('contact', theme=theme, comments=comments, contact_way=contact_way,
+            status=status, posted_on=datetime.datetime.now())
+
+def del_contact(id):
+    db.delete('contact', where='id=$id', vars=locals())
+
+def get_contacts():
+    return db.select('contact', order='id desc')
+
+def get_contact(id):
+    try:
+        return db.select('contact', where='id=$id',
+                         vars=locals())[0]
+    except IndexError:
+        return None
+
 def new_post(title, text, blog_class):
     db.insert('blog', title=title, content=text,
               blog_class = blog_class,
               posted_on=datetime.datetime.now())
+
+def new_post_set(title, class_name):
+    return db.insert('series', name=title, class_name=class_name)
+
+def add_blog_series(series_id, id_list):
+    db.update('blog', where='id in $id_list', vars=locals(), series_id=series_id)
+
+def get_blog_set_posts(id):
+    result = db.query('select b.title title, b.id id, b.blog_class blog_class, b.posted_on posted_on from blog b, series s where b.series_id=s.id order by b.title')
+    return result
 
 def del_post(id):
     db.delete('blog', where='id=$id', vars=locals())
@@ -69,7 +96,7 @@ def get_test_posts():
     return db.select('blog', where='blog_class=3', order='id desc')
 
 def get_perfect_posts():
-    return db.select('blog', where='blog_class=4', order='id desc')
+    return db.select('series', order='id desc')
 
 def get_blog_class():
     return db.select('blog_class')

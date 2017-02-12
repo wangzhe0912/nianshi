@@ -92,6 +92,28 @@ class Contact(object):
             server.login("wangzhe0912@tju.edu.cn","qxq102132")
             server.sendmail(FROM, TO, msg.as_string())
             server.quit()
-        except Exception, e:  
+            model.new_contact(data.theme, data.comments, data.contact_way, 'Success')
+        except Exception, e: 
+            model.new_contact(data.theme, data.comments, data.contact_way, 'Fail')
             print "失败："+str(e)
-        web.seeother('/')       
+        web.seeother('/') 
+
+
+class IndexContact(object):
+    def GET(self):
+        contacts = model.get_contacts()
+        return render.index_contact(contacts, session=session)
+
+
+class ViewContact(object):
+    def GET(self, id):
+        contact = model.get_contact(id)
+        return render.contact_info(contact, session=session)
+
+
+class DeleteContact(object):
+    def GET(self, id):
+        if session.privilege != 2:
+            return render_no_base.not_found404()
+        model.del_contact(int(id))
+        raise web.seeother('/contact_index')

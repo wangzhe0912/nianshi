@@ -28,6 +28,9 @@ urls = ('/login', 'Login',
         '/log_out', 'LogOut',
         '/', 'Hello',
         '/contact', 'Contact',
+        '/contact_index', 'IndexContact',
+        '/view_contact/(\d+)', 'ViewContact',
+        '/delete_contact/(\d+)', 'DeleteContact',
         
         '/blog', 'Blog',
         '/editor', 'Editor',
@@ -41,6 +44,8 @@ urls = ('/login', 'Login',
         '/index_test', 'IndexTest',
         '/index_perfect', 'IndexPerfect',
         '/search', 'Search',
+        '/new_blog_sets', 'NewBlogSet',
+        '/view_blog_set/(\d+)', 'ViewBlogSet',
         
         '/video', 'Video',
         '/new_video', 'NewVideo',
@@ -81,8 +86,8 @@ app = web.application(urls, globals())
 session = web.session.Session(app, web.session.DiskStore('sessions'), initializer = {'login_status': 0, 'username':'','privilege': 0})
 web.config._session = session
 
-from website_class import Login, LogOut, Hello, Contact
-from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl, IndexPerfect, IndexTest, View, Search
+from website_class import Login, LogOut, Hello, Contact, IndexContact, ViewContact, DeleteContact
+from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl, IndexPerfect, IndexTest, View, Search, NewBlogSet, ViewBlogSet
 from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo, SearchVideo
 from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL, IndexToolSoftware, DeleteTool, EditTool, ViewTool, SearchTool
 # from tool_class import 
