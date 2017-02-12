@@ -26,6 +26,7 @@ $def with (blogs=[[],[],[],[]], session=None)
         $if session.privilege == 2:
           <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
           <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+          <li><a href="/new_blog_sets"><i class="fa fa-sliders fa-fw"></i>创建精品博客集</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>
@@ -112,10 +113,9 @@ $def with (blogs=[[],[],[],[]], session=None)
           <hr>
           <table class="table table-striped">
             <tbody>
-              $for blog in blogs[3]:
+              $for blog in blogs[-1]:
                 <tr>
-                  <td><a href="/view/$blog.id">$blog.title</a></td>
-                  <td>$blog.posted_on</td>
+                  <td><a href="/view_blog_set/$blog.id">$blog.name</a></td>
                 </tr>
             </tbody>
           </table>

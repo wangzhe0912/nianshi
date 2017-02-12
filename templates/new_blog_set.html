@@ -1,0 +1,93 @@
+$def with(posts, session={'privilege':0})
+<div class="templatemo-flex-row">
+  <div class="templatemo-sidebar">
+    <header class="templatemo-site-header">
+      <div class="square"></div>
+      <h1>念师</h1>
+    </header>
+    <div class="profile-photo-container">
+      <img id="profile" src="../static/img/profile-photo.jpeg" alt="Profile Photo" class="img-responsive">  
+      <div class="profile-photo-overlay" id="profile-div"></div>
+    </div>      
+    <!-- Search box -->
+    <form class="templatemo-search-form" role="search" action="/search" method="post">
+      <div class="input-group">
+          <button type="submit" class="fa fa-search"></button>
+          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+      </div>
+    </form>
+    <div class="mobile-menu-icon">
+        <i class="fa fa-bars"></i>
+    </div>
+    <nav class="templatemo-left-nav">          
+      <ul>
+        <li><a href="/blog"><i class="fa fa-users fa-fw"></i>博客主页</a></li>
+        <li><a href="/index"><i class="fa fa-users fa-fw"></i>目录</a></li>
+        $if session.privilege == 2:
+          <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
+          <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+          <li><a href="/new_blog_sets"><i class="fa fa-sliders fa-fw"></i>创建精品博客集</a></li>
+        <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="templatemo-content col-1 light-gray-bg view_page">
+    <form role="form" action="/new_blog_sets" method="POST" id="blog_sets">
+        <label for="title">博客集名称</label>
+        <input type="text" class="form-control" name="title" placeholder="请输入博客集名称">
+        <label for="blog_ids">选择加入博客集的博客</label>
+        <select multiple class="form-control" size="30" name="blog_ids">
+        $for post in posts:
+            <option value="$post.id">$post.title</option>
+        </select>
+      <button type="submit" class="btn btn-default" form="blog_sets">提交</button>
+    </form>
+  </div>
+</div>
+
+
+
+<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'> -->
+<link href="../static/css/font-awesome.min.css" rel="stylesheet">
+<link href="../static/css/templatemo-style.css" rel="stylesheet">   
+<script type="text/javascript" src="../static/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+<style>
+#dropdownMenu1 {
+  padding: 0px 50px;
+  background-color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  color: #7f7f7f;
+}
+#logout {
+  min-width: 0px;
+  padding: 0px 40px;
+}
+#out {
+  border-color: white;
+}
+.list-group-item {
+  border: none;
+}
+#profile-div {
+  background-color: rgba(4, 152, 114, 0); 
+}
+.view_page {
+    background-image:url(../static/img/view_background.jpg);
+    background-color: rgba(4, 152, 114, 0); 
+    padding: 20px;
+}
+.title {
+    text-align:center;
+}
+.title > h1 {
+    font-size: 4em;
+    color: rgba(85, 85, 85, 0.72);
+    padding: 10px;
+}
+.content {
+    font-size: 1.5em;
+    color: #8a433b;
+    padding: 10px;
+}
+</style>

@@ -26,24 +26,12 @@ $def with(posts, session={'privilege':0})
         $if session.privilege == 2:
           <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
           <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+          <li><a href="/new_blog_sets"><i class="fa fa-sliders fa-fw"></i>创建精品博客集</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>
   </div>
   <div class="templatemo-content col-1 light-gray-bg view_page">
-<!--       <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand">菜单栏</a>
-        </div>
-        <div>
-            <ul class="nav navbar-nav">
-                <li><a href="/blog">博客首页</a></li>
-                <li><a href="#">文章目录</a></li>
-            </ul>
-        </div>
-        </div>
-      </nav>  -->  
 	<table class="table table-striped">
 	  <div class='title'>
   		<h1>博客索引</h1>
@@ -84,7 +72,7 @@ $def with(posts, session={'privilege':0})
 
 
 
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'> -->
 <link href="../static/css/font-awesome.min.css" rel="stylesheet">
 <link href="../static/css/templatemo-style.css" rel="stylesheet">   
 <script type="text/javascript" src="../static/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
