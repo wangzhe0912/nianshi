@@ -1,4 +1,4 @@
-$def with (blog_classes)
+$def with (session, blog_classes)
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -22,10 +22,14 @@ $def with (blog_classes)
     <nav class="templatemo-left-nav">          
       <ul>
         <li><a href="/blog"><i class="fa fa-users fa-fw"></i>博客主页</a></li>
-        <li><a href="/blog"><i class="fa fa-users fa-fw"></i>目录</a></li>
-        <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
-        <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
-        <li><a href="/new_blog_sets"><i class="fa fa-sliders fa-fw"></i>创建精品博客集</a></li>
+        <li><a href="/index"><i class="fa fa-users fa-fw"></i>目录</a></li>
+        $if session.privilege != 0:
+          <li><a href="/editor"><i class="fa fa-users fa-fw"></i>写博客</a></li>
+          $if session.privilege == 2:
+            <li><a href="/upload_blog"><i class="fa fa-sliders fa-fw"></i>上传博客</a></li>
+            <li><a href="/new_blog_sets"><i class="fa fa-sliders fa-fw"></i>创建精品博客集</a></li>
+          $else:
+            <li><a href="/owner/$session.userId"><i class="fa fa-sliders fa-fw"></i>管理我的博客</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>

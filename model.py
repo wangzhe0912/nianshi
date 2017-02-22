@@ -54,9 +54,9 @@ def get_contact(id):
     except IndexError:
         return None
 
-def new_post(title, text, blog_class):
-    db.insert('blog', title=title, content=text,
-              blog_class = blog_class,
+def new_post(title, text, blog_class, owner):
+    db.insert('blog', title = title, content = text,
+              blog_class = blog_class, owner = owner,
               posted_on=datetime.datetime.now())
 
 def new_post_set(title, class_name):
@@ -79,12 +79,19 @@ def update_post(id, title, text):
 def get_posts():
     return db.select('blog', order='id desc')
 
+def get_blogs_for_person(id):
+    return db.select('blog', where='owner=$id',
+                     vars=locals(), order='id desc')
+
 def get_post(id):
     try:
         return db.select('blog', where='id=$id',
                          vars=locals())[0]
     except IndexError:
         return None
+
+def get_post_owner(id):
+    return db.select('blog', where='id=$id', vars=locals())[0]
 
 def get_basic_posts():
     return db.select('blog', where='blog_class=1', order='id desc')

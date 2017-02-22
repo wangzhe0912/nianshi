@@ -46,6 +46,7 @@ urls = ('/login', 'Login',
         '/search', 'Search',
         '/new_blog_sets', 'NewBlogSet',
         '/view_blog_set/(\d+)', 'ViewBlogSet',
+        '/owner/(\d+)', 'Owner',
         
         '/video', 'Video',
         '/new_video', 'NewVideo',
@@ -87,7 +88,8 @@ session = web.session.Session(app, web.session.DiskStore('sessions'), initialize
 web.config._session = session
 
 from website_class import Login, LogOut, Hello, Contact, IndexContact, ViewContact, DeleteContact
-from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl, IndexPerfect, IndexTest, View, Search, NewBlogSet, ViewBlogSet
+from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl
+from blog_class import IndexPerfect, IndexTest, View, Search, NewBlogSet, ViewBlogSet, Owner
 from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo, SearchVideo
 from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL, IndexToolSoftware, DeleteTool, EditTool, ViewTool, SearchTool
 # from tool_class import 
@@ -103,5 +105,6 @@ config = web.storage(
 
 
 if __name__ == '__main__':
+    #web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
     app.run()
 

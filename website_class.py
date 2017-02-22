@@ -45,11 +45,12 @@ class Login(object):
             return render.login(result=False, desc=result["desc"])
         else:
             session.username = result['result']['username']
+            session.userId = result['result']['id']
             session.login_status = 1
-            if not result['result']['admin'] and result['result']['shizi']:
+            if not result['result']['admin'] and result['result']['general_user']:
                 #师子的privilege编号是1
                 session.privilege = 1
-            elif result['result']['admin'] and not result['result']['shizi']:
+            elif result['result']['admin'] and not result['result']['general_user']:
                 #admin的privilege编号是2
                 session.privilege = 2   
             else:

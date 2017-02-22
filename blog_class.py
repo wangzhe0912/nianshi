@@ -43,17 +43,17 @@ class Editor(object):
         return result_dict
     
     def GET(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         blog_class = model.get_blog_class()
-        return render.editor(list(blog_class))
+        return render.editor(session, list(blog_class))
 
     def POST(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         data = web.data()
         result = self.url_decode(data)
-        model.new_post(result['title'], result['content'], result['blog_class'])
+        model.new_post(result['title'], result['content'], result['blog_class'], session.userId)
         raise web.seeother('/blog')
 
 
@@ -111,13 +111,13 @@ class UploadBlog(object):
         return result
     
     def GET(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         blog_class = model.get_blog_class()
         return render.upload_blog(list(blog_class))
     
     def POST(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         data = web.input()
         blog_class = data.blog_class
@@ -155,7 +155,9 @@ class New:
 
 class Delete:
     def GET(self, id):
-        if session.privilege != 2:
+        owner = model.get_post_owner(id).owner
+        print "session.privilege", session.privilege
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         model.del_post(int(id))
         raise web.seeother('/index')
@@ -163,7 +165,8 @@ class Delete:
 
 class Edit:
     def GET(self, id):
-        if session.privilege != 2:
+        owner = model.get_post_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         post = model.get_post(int(id))
         form = New.form()
@@ -171,7 +174,8 @@ class Edit:
         return render.edit(post, form)
 
     def POST(self, id):
-        if session.privilege != 2:
+        owner = model.get_post_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         form = New.form()
         post = model.get_post(int(id))
@@ -251,5 +255,10 @@ class NewBlogSet(object):
 class ViewBlogSet(object):
     def GET(self, id):
         posts = list(model.get_blog_set_posts(id))
-        print posts
+        return render.index(posts, session=session)
+
+
+class Owner(object):
+    def GET(self, id):
+        posts = list(model.get_blogs_for_person(id))
         return render.index(posts, session=session)
