@@ -60,6 +60,7 @@ urls = ('/login', 'Login',
         '/index_video_fe', 'IndexVideoFE',
         '/index_video_dl', 'IndexVideoDL',
         '/search_video', 'SearchVideo',
+        '/owner_video/(\d+)', 'OwnerVideo',
         
         '/tool', 'Tool',
         '/new_tool', 'NewTool',
@@ -72,6 +73,7 @@ urls = ('/login', 'Login',
         '/index_tool_book', 'IndexToolBook',
         '/index_tool_ai', 'IndexToolAI',
         '/search_tool', 'SearchTool',
+        '/owner_tool/(\d+)', 'OwnerTool',
         
         '/ue_imageUp', Ue_ImageUp,
         '/ue_fileUp', Ue_FileUp,
@@ -90,8 +92,10 @@ web.config._session = session
 from website_class import Login, LogOut, Hello, Contact, IndexContact, ViewContact, DeleteContact
 from blog_class import Blog, Editor, UploadBlog, Delete, Edit, Index, IndexBasic, IndexDl
 from blog_class import IndexPerfect, IndexTest, View, Search, NewBlogSet, ViewBlogSet, Owner
-from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo, SearchVideo
-from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL, IndexToolSoftware, DeleteTool, EditTool, ViewTool, SearchTool
+from video_class import Video, NewVideo, IndexVideo, DeleteVideo, EditVideo, IndexVideoDB, OwnerVideo
+from video_class import IndexVideoDL, IndexVideoFE, IndexVideoPython,IndexVideoTest, ViewVideo, SearchVideo
+from tool_class import Tool, NewTool, IndexTool, IndexToolAI, IndexToolBook, IndexToolDL
+from tool_class import IndexToolSoftware, DeleteTool, EditTool, ViewTool, SearchTool, OwnerTool
 # from tool_class import 
 
 #配置template

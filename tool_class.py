@@ -27,13 +27,13 @@ class Tool(object):
 
 class NewTool(object):
     def GET(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         tool_class = model.get_tool_class()
         return render.new_tool(list(tool_class), session=session)
     
     def POST(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         data = web.input()
         title = data.title
@@ -41,13 +41,14 @@ class NewTool(object):
         describe = data.describe
         url = data.url
         password = data.password
-        model.new_tool(title, describe, tool_class, url, password)
+        model.new_tool(title, describe, tool_class, url, password, session.userId)
         return web.seeother('/tool')
 
 
 class DeleteTool(object):
     def GET(self, id):
-        if session.privilege != 2:
+        owner = model.get_tool_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         model.del_tool(int(id))
         raise web.seeother('/index_tool')
@@ -55,7 +56,8 @@ class DeleteTool(object):
 
 class EditTool(object):
     def GET(self, id):
-        if session.privilege != 2:
+        owner = model.get_tool_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         data = model.get_tool(int(id))
         resource_id = data.resource_id
@@ -64,7 +66,8 @@ class EditTool(object):
         return render.edit_tool(data, resource_data, tool_classes, session, id)
 
     def POST(self, id):
-        if session.privilege != 2:
+        owner = model.get_tool_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         data = web.input()
         model.update_tool(int(id), data.title, data.describe,
@@ -115,5 +118,11 @@ class SearchTool(object):
         key_words = web.data().split('=')[1].split('+')
         print key_words
         # ["srch-term"].split()
-        posts = list(model.get_posts_by_keywords(key_words, 'tool'))
-        return render.index_tool(posts, session=session)
+        tools = list(model.get_posts_by_keywords(key_words, 'tool'))
+        return render.index_tool(tools, session=session)
+
+
+class OwnerTool(object):
+    def GET(self, id):
+        tools = list(model.get_tools_for_person(id))
+        return render.index_tool(tools, session=session)

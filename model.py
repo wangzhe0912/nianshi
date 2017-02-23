@@ -120,9 +120,9 @@ def get_blog_class():
 # def get_blogs_perfect():
 #     return db.select('blog', where='blog_class=4', order='id desc')
 
-def new_video(title, describe, video_class, url, password):
+def new_video(title, describe, video_class, url, password, owner):
     resource_id = db.insert('resource', url=url, password=password)
-    db.insert('video', title=title, detail=describe,
+    db.insert('video', title=title, detail=describe, owner = owner,
               video_class = video_class, resource_id=resource_id,
               posted_on=datetime.datetime.now())
 
@@ -140,6 +140,13 @@ def get_video(id):
 
 def get_videos():
     return db.select('video', order='id desc')
+
+def get_video_owner(id):
+    return db.select('video', where='id=$id', vars=locals())[0]
+
+def get_videos_for_person(id):
+    return db.select('video', where='owner=$id',
+                     vars=locals(), order='id desc')
 
 def get_video_class():
     return db.select('video_class')
@@ -160,9 +167,9 @@ def get_video_test():
     return db.select('video', where='video_class=5', order='id desc')
 
 
-def new_tool(title, describe, tool_class, url, password):
+def new_tool(title, describe, tool_class, url, password, owner):
     resource_id = db.insert('resource', url=url, password=password)
-    db.insert('tool', title=title, detail=describe,
+    db.insert('tool', title=title, detail=describe, owner = owner,
               tool_class = tool_class, resource_id=resource_id,
               posted_on=datetime.datetime.now())
 
@@ -181,6 +188,13 @@ def get_tool(id):
 def get_tools():
     return db.select('tool', order='id desc')
 
+def get_tool_owner(id):
+    return db.select('tool', where='id=$id', vars=locals())[0]
+
+def get_tools_for_person(id):
+    return db.select('tool', where='owner=$id',
+                     vars=locals(), order='id desc')
+
 def get_tool_class():
     return db.select('tool_class')
 
@@ -195,7 +209,6 @@ def get_tool_ai():
 
 def get_tool_dl():
     return db.select('tool', where='tool_class=4', order='id desc')
-
 
 def get_resource(id):
     return db.select('resource', where='id=$id', vars=locals())[0]

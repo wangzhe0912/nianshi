@@ -23,8 +23,10 @@ $def with (video_classes, session)
       <ul>
         <li><a href="/video"><i class="fa fa-users fa-fw"></i>视频主页</a></li>
         <li><a href="/index_video"><i class="fa fa-users fa-fw"></i>目录</a></li>
-        $if session.privilege == 2:
+        $if session.privilege != 0:
           <li><a href="/new_video"><i class="fa fa-sliders fa-fw"></i>上传视频</a></li>
+          $if session.privilege != 2:
+            <li><a href="/owner_video/$session.userId"><i class="fa fa-sliders fa-fw"></i>管理我的视频</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>

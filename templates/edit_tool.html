@@ -23,8 +23,10 @@ $def with (data, resource_data, tool_classes, session, id)
       <ul>
         <li><a href="/tool"><i class="fa fa-users fa-fw"></i>工具主页</a></li>
         <li><a href="/index_tool"><i class="fa fa-users fa-fw"></i>目录</a></li>
-        $if session.privilege == 2:
+        $if session.privilege != 0:
           <li><a href="/new_tool"><i class="fa fa-sliders fa-fw"></i>上传工具</a></li>
+          $if session.privilege != 2:
+            <li><a href="/owner_tool/$session.userId"><i class="fa fa-sliders fa-fw"></i>管理我的工具</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>

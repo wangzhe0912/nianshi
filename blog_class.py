@@ -156,7 +156,6 @@ class New:
 class Delete:
     def GET(self, id):
         owner = model.get_post_owner(id).owner
-        print "session.privilege", session.privilege
         if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         model.del_post(int(id))

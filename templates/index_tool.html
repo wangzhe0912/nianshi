@@ -23,8 +23,10 @@ $def with(tools, session={'privilege':0})
       <ul>
         <li><a href="/tool"><i class="fa fa-users fa-fw"></i>工具主页</a></li>
         <li><a href="/index_tool"><i class="fa fa-users fa-fw"></i>目录</a></li>
-        $if session.privilege == 2:
+        $if session.privilege != 0:
           <li><a href="/new_tool"><i class="fa fa-sliders fa-fw"></i>上传工具</a></li>
+          $if session.privilege != 2:
+            <li><a href="/owner_tool/$session.userId"><i class="fa fa-sliders fa-fw"></i>管理我的工具</a></li>
         <li><a href="/"><i class="fa fa-eject fa-fw"></i>返回首页</a></li>
       </ul>
     </nav>
@@ -52,7 +54,7 @@ $def with(tools, session={'privilege':0})
         <th>标题</th>
         <th>类别</th>
         <th>日期</th>
-        $if session.privilege == 2:
+        $if session.privilege != 0:
           <th>操作</th>
       </tr>
     </thead>
@@ -71,7 +73,7 @@ $def with(tools, session={'privilege':0})
               深度学习训练集
             </td>
             <td>$tool.posted_on</td>
-            $if session.privilege == 2:
+            $if session.privilege == 2 or tool.owner == session.userId:
               <td><a href="/edit_tool/$tool.id">编辑</a>
               <a href="/delete_tool/$tool.id">删除</a>
               </td>

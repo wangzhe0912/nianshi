@@ -29,13 +29,13 @@ class Video(object):
 
 class NewVideo(object):
     def GET(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         video_class = model.get_video_class()
         return render.new_video(list(video_class), session=session)
     
     def POST(self):
-        if session.privilege != 2:
+        if session.privilege == 0:
             return render_no_base.not_found404()
         data = web.input()
         title = data.title
@@ -43,13 +43,14 @@ class NewVideo(object):
         describe = data.describe
         url = data.url
         password = data.password
-        model.new_video(title, describe, video_class, url, password)
+        model.new_video(title, describe, video_class, url, password, session.userId)
         return web.seeother('/video')
 
 
 class DeleteVideo(object):
     def GET(self, id):
-        if session.privilege != 2:
+        owner = model.get_video_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         model.del_video(int(id))
         raise web.seeother('/index_video')
@@ -57,7 +58,8 @@ class DeleteVideo(object):
 
 class EditVideo(object):
     def GET(self, id):
-        if session.privilege != 2:
+        owner = model.get_video_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         data = model.get_video(int(id))
         resource_id = data.resource_id
@@ -66,7 +68,8 @@ class EditVideo(object):
         return render.edit_video(data, resource_data, video_classes, session, id)
 
     def POST(self, id):
-        if session.privilege != 2:
+        owner = model.get_video_owner(id).owner
+        if session.privilege != 2 and session.userId != owner:
             return render_no_base.not_found404()
         data = web.input()
         model.update_video(int(id), data.title, data.describe,
@@ -123,5 +126,11 @@ class SearchVideo(object):
         key_words = web.data().split('=')[1].split('+')
         print key_words
         # ["srch-term"].split()
-        posts = list(model.get_posts_by_keywords(key_words, 'video'))
-        return render.index_video(posts, session=session)
+        videos = list(model.get_posts_by_keywords(key_words, 'video'))
+        return render.index_video(videos, session=session)
+
+
+class OwnerVideo(object):
+    def GET(self, id):
+        videos = list(model.get_videos_for_person(id))
+        return render.index_video(videos, session=session)
