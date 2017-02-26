@@ -72,7 +72,6 @@ class Contact(object):
 
     def POST(self):
         data = web.input()
-        print data
         HOST = 'smtp.tju.edu.cn'
         SUBJECT = data.theme
         TO = "1658563602@qq.com"

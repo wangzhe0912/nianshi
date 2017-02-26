@@ -23,7 +23,7 @@ class Video(object):
 
     def GET(self):
         videos = self.get_videos_for_five_parts()
-        print videos
+
         return render.video(videos=videos, session=session)
 
 
@@ -124,7 +124,6 @@ class IndexVideoDL(object):
 class SearchVideo(object):
     def POST(self):
         key_words = web.data().split('=')[1].split('+')
-        print key_words
         # ["srch-term"].split()
         videos = list(model.get_posts_by_keywords(key_words, 'video'))
         return render.index_video(videos, session=session)

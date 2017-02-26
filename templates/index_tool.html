@@ -73,10 +73,11 @@ $def with(tools, session={'privilege':0})
               深度学习训练集
             </td>
             <td>$tool.posted_on</td>
-            $if session.privilege == 2 or tool.owner == session.userId:
-              <td><a href="/edit_tool/$tool.id">编辑</a>
-              <a href="/delete_tool/$tool.id">删除</a>
-              </td>
+            $if session.privilege != 0:
+              $if session.privilege == 2 or (userId in session and post.owner == session.userId):
+                <td><a href="/edit_tool/$tool.id">编辑</a>
+                <a href="/delete_tool/$tool.id">删除</a>
+                </td>
         </tr>
     </tbody>
   </table>

@@ -32,7 +32,6 @@ def get_posts_by_keywords(keywords, from_class):
     where_sentence = ' where '
     for keyword in keywords:
         where_sentence += 'title like "%' + unquote(keyword) + '%" and '
-    print 'select * from ' + from_class + where_sentence[:-4]
     result = db.query('select * from ' + from_class + where_sentence[:-4])
     # result = db.select(from_class, where='$where_sentence[:-4]', vars=locals())
     return result
@@ -66,7 +65,7 @@ def add_blog_series(series_id, id_list):
     db.update('blog', where='id in $id_list', vars=locals(), series_id=series_id)
 
 def get_blog_set_posts(id):
-    result = db.query('select b.title title, b.id id, b.blog_class blog_class, b.posted_on posted_on from blog b, series s where b.series_id=s.id and b.series_id=' + str(id))
+    result = db.query('select b.title title, b.id id, b.blog_class blog_class, b.posted_on posted_on, b.owner owner from blog b, series s where b.series_id=s.id and b.series_id=' + str(id))
     return result
 
 def del_post(id):

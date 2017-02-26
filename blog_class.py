@@ -36,9 +36,7 @@ class Editor(object):
         result_dict = {}
         for key, value in [x.split('=') for x in result_list]:
             if key == "content":
-                print value
                 value = value.replace('+', ' ')
-                print value
             result_dict[key] = unquote(value)
         return result_dict
     
@@ -122,7 +120,6 @@ class UploadBlog(object):
         data = web.input()
         blog_class = data.blog_class
         input_file = data.inputfile
-        print input_file
         blog_content = self.trans_txt_to_html(input_file)
         title = data.title
         model.new_post(title, blog_content, blog_class)
@@ -226,7 +223,6 @@ class View:
 class Search(object):
     def POST(self):
         key_words = web.data().split('=')[1].split('+')
-        print key_words
         # ["srch-term"].split()
         posts = list(model.get_posts_by_keywords(key_words, 'blog'))
         return render.index(posts, session=session)

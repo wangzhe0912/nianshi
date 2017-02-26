@@ -75,10 +75,11 @@ $def with(videos, session={'privilege':0})
               测试相关课程
             </td>
             <td>$video.posted_on</td>
-            $if session.privilege == 2 or video.owner == session.userId:
-              <td><a href="/edit_video/$video.id">编辑</a>
-              <a href="/delete_video/$video.id">删除</a>
-              </td>
+            $if session.privilege != 0:
+              $if session.privilege == 2 or (userId in session and post.owner == session.userId):
+                <td><a href="/edit_video/$video.id">编辑</a>
+                <a href="/delete_video/$video.id">删除</a>
+                </td>
         </tr>
     </tbody>
   </table>
