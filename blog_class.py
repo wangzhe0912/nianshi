@@ -211,7 +211,7 @@ class IndexTest(object):
 class IndexPerfect(object):
     def GET(self):
         posts = list(model.get_perfect_posts())
-        return render.index(posts, session=session)
+        return render.index(posts, session=session, type='series')
 
 
 class View:
@@ -231,7 +231,8 @@ class Search(object):
 class NewBlogSet(object):
     def GET(self):
         posts = model.get_posts()
-        return render.new_blog_set(posts, session=session)
+        types = model.get_blog_class()
+        return render.new_blog_set(posts, types, session=session)
 
     def POST(self):
         post_ids = web.data().split('&')
@@ -242,7 +243,9 @@ class NewBlogSet(object):
                 title = result[1]
             if result[0] == 'blog_ids':
                 id_list.append(int(result[1]))
-        series_id = model.new_post_set(unquote(title), 'blog')
+            if result[0] == 'class':
+                class_name = int(result[1])
+        series_id = model.new_post_set(unquote(title), class_name)
         model.add_blog_series(series_id, id_list)
         web.seeother('/blog')
 

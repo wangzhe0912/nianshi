@@ -1,4 +1,4 @@
-$def with(posts, session={'privilege':0})
+$def with(posts, session={'privilege':0}, type='common')
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -44,30 +44,47 @@ $def with(posts, session={'privilege':0})
           <th>标题</th>
           <th>类别</th>
           <th>日期</th>
-          $if session.privilege != 0:
+          $if session.privilege != 0 and type == 'common':
               <th>操作</th>
         </tr>
       </thead>
       <tbody>
-        $for post in posts:
+        $if type == 'common':
+          $for post in posts:
             <tr>
-                <td><a href="/view/$post.id">$post.title</a></td>
-                <td>
-                $if post.blog_class == 1:
-                    基础编程
-                $elif post.blog_class == 2:
-                    深度学习
-                $elif post.blog_class == 3:
-                    测试相关
-                $elif post.blog_class == 4:
-                    精品博客
-                </td>
-                <td>$post.posted_on</td>
-                $if session.privilege != 0:
-                    $if session.privilege == 2 or (userId in session and post.owner == session.userId):
-                      <td><a href="/edit/$post.id">编辑</a>
-                      <a href="/delete/$post.id">删除</a>
-                      </td>
+              <td><a href="/view/$post.id">$post.title</a></td>
+              <td>
+              $if post.blog_class == 1:
+                  基础编程
+              $elif post.blog_class == 2:
+                  深度学习
+              $elif post.blog_class == 3:
+                  测试相关
+              $elif post.blog_class == 4:
+                  精品博客
+              </td>
+              <td>$post.posted_on</td>
+              $if session.privilege != 0:
+                  $if session.privilege == 2 or (userId in session and post.owner == session.userId):
+                    <td><a href="/edit/$post.id">编辑</a>
+                    <a href="/delete/$post.id">删除</a>
+                    </td>
+            </tr>
+        $elif type == 'series':
+          $for post in posts:
+            <tr>
+              <td><a href="/view_blog_set/$post.id">$post.name</a></td>
+              <td>
+              $if post.class_name == 1:
+                  基础编程
+              $elif post.class_name == 2:
+                  深度学习
+              $elif post.class_name == 3:
+                  测试相关
+              $elif post.class_name == 4:
+                  精品博客
+              </td>
+              <td>$post.posted_on</td>
             </tr>
       </tbody>
     </table>

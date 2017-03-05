@@ -1,4 +1,4 @@
-$def with(posts, session={'privilege':0})
+$def with(posts, types, session={'privilege':0})
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -35,6 +35,11 @@ $def with(posts, session={'privilege':0})
     <form role="form" action="/new_blog_sets" method="POST" id="blog_sets">
         <label for="title">博客集名称</label>
         <input type="text" class="form-control" name="title" placeholder="请输入博客集名称">
+        <label for="title">博客集所属类型</label>
+        <select class="form-control" name="class">
+        $for type in types:
+            <option value="$type.id">$type.blog_class_name</option>
+        </select>
         <label for="blog_ids">选择加入博客集的博客</label>
         <select multiple class="form-control" size="30" name="blog_ids">
         $for post in posts:
