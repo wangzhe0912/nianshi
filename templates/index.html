@@ -1,4 +1,4 @@
-$def with(posts, session={'privilege':0}, type='common')
+$def with(posts, total_num, record_number_of_page, page_id, url, session={'privilege':0}, type='common')
 <div class="templatemo-flex-row">
   <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
@@ -88,15 +88,27 @@ $def with(posts, session={'privilege':0}, type='common')
             </tr>
       </tbody>
     </table>
+    <ul class="pagination"></ul>
   </div>
 </div>
 
-
-
-<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'> -->
 <link href="../static/css/font-awesome.min.css" rel="stylesheet">
-<link href="../static/css/templatemo-style.css" rel="stylesheet">   
-<script type="text/javascript" src="../static/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+<link href="../static/css/templatemo-style.css" rel="stylesheet"> 
+<script type="text/javascript" src="../static/js/jqPaginator.js"></script>
+<script type="text/javascript" src="../static/js/templatemo-script.js"></script>
+<script type="text/javascript">
+  var page_num = Math.ceil($total_num/$record_number_of_page);
+  jQuery.jqPaginator('.pagination', {
+      totalPages: page_num,
+      visiblePages: 10,
+      currentPage: $page_id,
+      onPageChange: function (num, type) {
+        if ($page_id != num) {
+          window.location=($url + num);
+        }
+      }
+  });
+</script>
 <style>
 #dropdownMenu1 {
   padding: 0px 50px;

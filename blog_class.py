@@ -13,7 +13,7 @@ from pygments.lexers import get_lexer_for_filename
 render = web.template.render('templates', base='base')
 render_no_base = web.template.render('templates')
 session = web.config._session
-
+record_number_of_page = 15
 #博客页
 class Blog(object):
     
@@ -181,9 +181,14 @@ class Edit:
         raise web.seeother('/index')
 
 class Index:
-    def GET(self):
-        posts = model.get_posts()
-        return render.index(posts, session=session)
+    def GET(self, page_id=1):
+        posts = list(model.get_posts())
+        total_num = len(posts)
+        begin = (int(page_id) - 1) * record_number_of_page
+        end = int(page_id) * record_number_of_page
+        records = posts[begin: end]
+        url = '/index/'
+        return render.index(records, total_num, record_number_of_page, page_id, url, session=session)
     
     def POST(self):
         posts = model.get_posts()
@@ -191,27 +196,47 @@ class Index:
 
 
 class IndexBasic(object):
-    def GET(self):
+    def GET(self, page_id=1):
         posts = list(model.get_basic_posts())
-        return render.index(posts, session=session)
+        total_num = len(posts)
+        begin = (int(page_id) - 1) * record_number_of_page
+        end = int(page_id) * record_number_of_page
+        records = posts[begin: end]
+        url = '/index_basic/'
+        return render.index(records, total_num, record_number_of_page, page_id, url, session=session)
 
 
 class IndexDl(object):
-    def GET(self):
+    def GET(self, page_id=1):
         posts = list(model.get_dl_posts())
-        return render.index(posts, session=session)
+        total_num = len(posts)
+        begin = (int(page_id) - 1) * record_number_of_page
+        end = int(page_id) * record_number_of_page
+        records = posts[begin: end]
+        url = '/index_dl/'
+        return render.index(records, total_num, record_number_of_page, page_id, url, session=session)
     
     
 class IndexTest(object):
-    def GET(self):
+    def GET(self, page_id=1):
         posts = list(model.get_test_posts())
-        return render.index(posts, session=session)
+        total_num = len(posts)
+        begin = (int(page_id) - 1) * record_number_of_page
+        end = int(page_id) * record_number_of_page
+        records = posts[begin: end]
+        url = '/index_test/'
+        return render.index(records, total_num, record_number_of_page, page_id, url, session=session)
     
     
 class IndexPerfect(object):
-    def GET(self):
+    def GET(self, page_id=1):
         posts = list(model.get_perfect_posts())
-        return render.index(posts, session=session, type='series')
+        total_num = len(posts)
+        begin = (int(page_id) - 1) * record_number_of_page
+        end = int(page_id) * record_number_of_page
+        records = posts[begin: end]
+        url = '/index_perfect/'
+        return render.index(records, total_num, record_number_of_page, page_id, url, session=session, type='series')
 
 
 class View:
@@ -251,12 +276,22 @@ class NewBlogSet(object):
 
 
 class ViewBlogSet(object):
-    def GET(self, id):
+    def GET(self, id, page_id=1):
         posts = list(model.get_blog_set_posts(id))
-        return render.index(posts, session=session)
+        total_num = len(posts)
+        begin = (int(page_id) - 1) * record_number_of_page
+        end = int(page_id) * record_number_of_page
+        records = posts[begin: end]
+        url = '/view_blog_set/' + str(id) + '/'
+        return render.index(records, total_num, record_number_of_page, page_id, url, session=session)
 
 
 class Owner(object):
-    def GET(self, id):
+    def GET(self, id, page_id=1):
         posts = list(model.get_blogs_for_person(id))
-        return render.index(posts, session=session)
+        total_num = len(posts)
+        begin = (int(page_id) - 1) * record_number_of_page
+        end = int(page_id) * record_number_of_page
+        records = posts[begin: end]
+        url = '/owner/' + str(id) + '/'
+        return render.index(records, total_num, record_number_of_page, page_id, url, session=session)
