@@ -104,7 +104,8 @@ $def with(posts, total_num, record_number_of_page, page_id, url, session={'privi
       currentPage: $page_id,
       onPageChange: function (num, type) {
         if ($page_id != num) {
-          window.location=($url + num);
+          // alert($url + num);
+          window.location=('$url' + num);
         }
       }
   });
