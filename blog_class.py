@@ -246,11 +246,13 @@ class View:
 
 
 class Search(object):
-    def POST(self):
+    def POST(self, page_id=1):
         key_words = web.data().split('=')[1].split('+')
         # ["srch-term"].split()
         posts = list(model.get_posts_by_keywords(key_words, 'blog'))
-        return render.index(posts, session=session)
+        total_num = len(posts)
+        url = '/search/'
+        return render.index(posts, total_num, total_num, page_id, url, session=session)
 
 
 class NewBlogSet(object):
